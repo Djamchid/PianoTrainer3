@@ -27,6 +27,16 @@ const songsData = {
       // Descendante
       ["C5", 8.5, 1], ["B4", 9.5, 1], ["A4", 10.5, 1], ["G4", 11.5, 1],
       ["F4", 12.5, 1], ["E4", 13.5, 1], ["D4", 14.5, 1], ["C4", 15.5, 1]
+    ],
+    lyrics: [
+      // Montante
+      ["Do", 0, 1], ["Ré", 1, 1], ["Mi", 2, 1], ["Fa", 3, 1],
+      ["Sol", 4, 1], ["La", 5, 1], ["Si", 6, 1], ["Do", 7, 1],
+      // Pause
+      ["", 8, 0.5],
+      // Descendante
+      ["Do", 8.5, 1], ["Si", 9.5, 1], ["La", 10.5, 1], ["Sol", 11.5, 1],
+      ["Fa", 12.5, 1], ["Mi", 13.5, 1], ["Ré", 14.5, 1], ["Do", 15.5, 1]
     ]
   },
   
@@ -45,6 +55,20 @@ const songsData = {
       ["G4", 16, 0.5], ["A4", 16.5, 0.5], ["G4", 17, 0.5], ["F4", 17.5, 0.5], ["E4", 18, 1], ["C4", 19, 1],
       // Din, dan, don
       ["G4", 20, 0.5], ["A4", 20.5, 0.5], ["G4", 21, 0.5], ["F4", 21.5, 0.5], ["E4", 22, 1], ["C4", 23, 1]
+    ],
+    lyrics: [
+      // Frère Jacques
+      ["Frè", 0, 1], ["re", 1, 1], ["Jac", 2, 1], ["ques", 3, 1],
+      // Dormez-vous?
+      ["Dor", 4, 1], ["mez", 5, 1], ["vous", 6, 1], ["?", 7, 1],
+      // Sonnez les matines
+      ["Son", 8, 1], ["nez", 9, 1], ["ma-ti-nes", 10, 2],
+      // Sonnez les matines
+      ["Son", 12, 1], ["nez", 13, 1], ["ma-ti-nes", 14, 2],
+      // Din, dan, don
+      ["Din", 16, 0.5], ["dan", 16.5, 0.5], ["din", 17, 0.5], ["don", 17.5, 0.5], ["din", 18, 1], ["don", 19, 1],
+      // Din, dan, don
+      ["Din", 20, 0.5], ["dan", 20.5, 0.5], ["din", 21, 0.5], ["don", 21.5, 0.5], ["din", 22, 1], ["don", 23, 1]
     ]
   },
   
@@ -59,6 +83,16 @@ const songsData = {
       ["C4", 16, 1], ["C4", 17, 1], ["C4", 18, 1], ["D4", 19, 1], ["E4", 20, 2], ["D4", 22, 2],
       // Pour écrire un mot
       ["C4", 24, 1], ["E4", 25, 1], ["E4", 26, 1], ["D4", 27, 1], ["C4", 28, 4]
+    ],
+    lyrics: [
+      // Au clair de la lune
+      ["Au", 0, 1], ["clair", 1, 1], ["de", 2, 1], ["la", 3, 1], ["lu", 4, 1], ["ne", 5, 1], ["", 6, 2],
+      // Mon ami Pierrot
+      ["Mon", 8, 1], ["a", 9, 1], ["mi", 10, 1], ["Pier", 11, 1], ["rot", 12, 4],
+      // Prête-moi ta plume
+      ["Prê", 16, 1], ["te", 17, 1], ["moi", 18, 1], ["ta", 19, 1], ["plu", 20, 1], ["me", 21, 1], ["", 22, 2],
+      // Pour écrire un mot
+      ["Pour", 24, 1], ["é", 25, 1], ["crire", 26, 1], ["un", 27, 1], ["mot", 28, 4]
     ]
   },
   
@@ -73,6 +107,16 @@ const songsData = {
       ["C4", 14, 1], ["E4", 15, 1], ["G4", 16, 1], ["G4", 17, 1], ["E4", 18, 1], ["G4", 19, 2],
       // Que je m'y suis baigné
       ["G4", 21, 1], ["A4", 22, 1], ["G4", 23, 1], ["E4", 24, 1], ["D4", 25, 1], ["C4", 26, 2]
+    ],
+    lyrics: [
+      // À la claire fontaine
+      ["À", 0, 1], ["la", 1, 1], ["claire", 2, 1], ["fon", 3, 1], ["tai", 4, 1], ["ne", 5, 2],
+      // M'en allant promener
+      ["M'en", 7, 1], ["al", 8, 1], ["lant", 9, 1], ["pro", 10, 1], ["me", 11, 1], ["ner", 12, 2],
+      // J'ai trouvé l'eau si belle
+      ["J'ai", 14, 1], ["trou", 15, 1], ["vé", 16, 1], ["l'eau", 17, 1], ["si", 18, 1], ["belle", 19, 2],
+      // Que je m'y suis baigné
+      ["Que", 21, 1], ["je", 22, 1], ["m'y", 23, 1], ["suis", 24, 1], ["bai", 25, 1], ["gné", 26, 2]
     ]
   },
   
@@ -87,6 +131,16 @@ const songsData = {
       ["G4", 14, 0.5], ["A4", 14.5, 0.5], ["G4", 15, 0.5], ["F4", 15.5, 0.5], ["E4", 16, 1], ["C4", 17, 1],
       // L'on y danse tous en rond
       ["C4", 18, 1], ["G4", 19, 1], ["G4", 20, 1], ["E4", 21, 1], ["C4", 22, 2]
+    ],
+    lyrics: [
+      // Sur le pont d'Avignon
+      ["Sur", 0, 1], ["le", 1, 1], ["pont", 2, 1], ["d'A", 3, 1], ["vi-gnon", 4, 2],
+      // L'on y danse, l'on y danse
+      ["L'on", 6, 1], ["y", 7, 1], ["dan", 8, 1], ["se", 9, 1], ["l'on", 10, 1], ["y", 11, 1], ["dan-se", 12, 2],
+      // Sur le pont d'Avignon
+      ["Sur", 14, 0.5], ["le", 14.5, 0.5], ["pont", 15, 0.5], ["d'A", 15.5, 0.5], ["vi", 16, 1], ["gnon", 17, 1],
+      // L'on y danse tous en rond
+      ["L'on", 18, 1], ["y", 19, 1], ["danse", 20, 1], ["en", 21, 1], ["rond", 22, 2]
     ]
   },
   
@@ -101,6 +155,16 @@ const songsData = {
       ["G4", 12, 1], ["F4", 13, 1], ["E4", 14, 1], ["D4", 15, 2],
       // L'enfant dormira bientôt
       ["C4", 17, 1], ["D4", 18, 1], ["E4", 19, 1], ["C4", 20, 3]
+    ],
+    lyrics: [
+      // Dodo, l'enfant do
+      ["Do", 0, 1], ["do,", 1, 1], ["l'en", 2, 1], ["fant do", 3, 2],
+      // L'enfant dormira bien vite
+      ["L'en", 5, 1], ["fant", 6, 1], ["dor-mi-ra", 7, 2], ["bien", 9, 1], ["vite", 10, 2],
+      // Dodo, l'enfant do
+      ["Do", 12, 1], ["do,", 13, 1], ["l'en", 14, 1], ["fant do", 15, 2],
+      // L'enfant dormira bientôt
+      ["L'en", 17, 1], ["fant", 18, 1], ["dor", 19, 1], ["mi-ra bien-tôt", 20, 3]
     ]
   },
   
@@ -115,6 +179,16 @@ const songsData = {
       ["G4", 8, 1], ["C5", 9, 1], ["B4", 10, 1], ["A4", 11, 1], ["G4", 12, 1],
       // Je la montre à ces messieurs
       ["G4", 13, 1], ["C5", 14, 1], ["B4", 15, 1], ["A4", 16, 1], ["G4", 17, 1]
+    ],
+    lyrics: [
+      // Une souris verte
+      ["U", 0, 1], ["ne sou", 1, 0.5], ["ris", 1.5, 0.5], ["ver", 2, 1], ["te", 3, 1],
+      // Qui courait dans l'herbe
+      ["Qui", 4, 1], ["cou", 5, 0.5], ["rait", 5.5, 0.5], ["dans", 6, 1], ["l'herbe", 7, 1],
+      // Je l'attrape par la queue
+      ["Je", 8, 1], ["l'at", 9, 1], ["trape", 10, 1], ["par", 11, 1], ["la queue", 12, 1],
+      // Je la montre à ces messieurs
+      ["Je", 13, 1], ["la", 14, 1], ["mon", 15, 1], ["tre à", 16, 1], ["ces messieurs", 17, 1]
     ]
   },
   
@@ -129,6 +203,16 @@ const songsData = {
       ["C4", 16, 1], ["D4", 17, 1], ["E4", 18, 1], ["F4", 19, 1], ["G4", 20, 2],
       // Qui fait du gâteau
       ["G4", 22, 1], ["A4", 23, 1], ["G4", 24, 1], ["F4", 25, 1], ["E4", 26, 2]
+    ],
+    lyrics: [
+      // Fais dodo, Colas mon p'tit frère
+      ["Fais", 0, 1], ["do", 1, 1], ["do,", 2, 1], ["Co", 3, 1], ["las", 4, 1], ["mon", 5, 1], ["p'tit frère", 6, 2],
+      // Fais dodo, t'auras du lolo
+      ["Fais", 8, 1], ["do", 9, 1], ["do,", 10, 1], ["t'au", 11, 1], ["ras", 12, 1], ["du", 13, 1], ["lo-lo", 14, 2],
+      // Maman est en haut
+      ["Ma", 16, 1], ["man", 17, 1], ["est", 18, 1], ["en", 19, 1], ["haut", 20, 2],
+      // Qui fait du gâteau
+      ["Qui", 22, 1], ["fait", 23, 1], ["du", 24, 1], ["gâ", 25, 1], ["teau", 26, 2]
     ]
   },
   
@@ -143,6 +227,16 @@ const songsData = {
       ["G4", 11, 0.5], ["G4", 11.5, 0.5], ["G4", 12, 0.5], ["G4", 12.5, 0.5], ["E4", 13, 1], ["G4", 14, 1],
       // Et la tête, et la tête
       ["G4", 15, 0.5], ["G4", 15.5, 0.5], ["G4", 16, 0.5], ["G4", 16.5, 0.5], ["E4", 17, 1], ["G4", 18, 1]
+    ],
+    lyrics: [
+      // Alouette, gentille alouette
+      ["A", 0, 1], ["lou", 1, 0.5], ["ette", 1.5, 0.5], ["gen", 2, 1], ["til", 3, 0.5], ["le", 3.5, 0.5], ["alouette", 4, 1],
+      // Alouette, je te plumerai
+      ["A", 5, 1], ["lou", 6, 0.5], ["et", 6.5, 0.5], ["te", 7, 1], ["je", 8, 1], ["te plumerai", 9, 2],
+      // Je te plumerai la tête
+      ["Je", 11, 0.5], ["te", 11.5, 0.5], ["plu", 12, 0.5], ["me", 12.5, 0.5], ["rai", 13, 1], ["la tête", 14, 1],
+      // Et la tête, et la tête
+      ["Et", 15, 0.5], ["la", 15.5, 0.5], ["tê", 16, 0.5], ["te", 16.5, 0.5], ["et", 17, 1], ["la tête", 18, 1]
     ]
   },
   
@@ -155,6 +249,14 @@ const songsData = {
       ["C4", 6, 1], ["E4", 7, 1], ["G4", 8, 0.5], ["G4", 8.5, 0.5], ["A4", 9, 0.5], ["G4", 9.5, 0.5], ["E4", 10, 0.5], ["D4", 10.5, 0.5], ["C4", 11, 1],
       // Ohé! Ohé!
       ["C4", 12, 0.5], ["G4", 12.5, 1], ["C4", 13.5, 0.5], ["G4", 14, 1]
+    ],
+    lyrics: [
+      // Il était un petit navire
+      ["Il", 0, 1], ["é", 1, 1], ["tait", 2, 1], ["un", 3, 0.5], ["pe", 3.5, 0.5], ["tit", 4, 1], ["navire", 5, 1],
+      // Qui n'avait ja-ja-jamais navigué
+      ["Qui", 6, 1], ["n'a", 7, 1], ["vait", 8, 0.5], ["ja", 8.5, 0.5], ["ja", 9, 0.5], ["ja", 9.5, 0.5], ["mais", 10, 0.5], ["na", 10.5, 0.5], ["vigué", 11, 1],
+      // Ohé! Ohé!
+      ["O", 12, 0.5], ["hé!", 12.5, 1], ["O", 13.5, 0.5], ["hé!", 14, 1]
     ]
   },
   
@@ -169,6 +271,16 @@ const songsData = {
       ["C4", 14, 1], ["E4", 15, 1], ["G4", 16, 1], ["C4", 17, 1], ["E4", 18, 1], ["G4", 19, 2],
       // À la mode de chez nous
       ["A4", 21, 1], ["G4", 22, 1], ["F4", 23, 1], ["E4", 24, 1], ["D4", 25, 1], ["C4", 26, 2]
+    ],
+    lyrics: [
+      // Savez-vous planter les choux
+      ["Sa", 0, 1], ["vez", 1, 1], ["vous", 2, 1], ["plan", 3, 1], ["ter", 4, 1], ["les choux", 5, 2],
+      // À la mode, à la mode
+      ["À", 7, 1], ["la", 8, 1], ["mo", 9, 1], ["de,", 10, 1], ["à", 11, 1], ["la mode", 12, 2],
+      // Savez-vous planter les choux
+      ["Sa", 14, 1], ["vez", 15, 1], ["vous", 16, 1], ["plan", 17, 1], ["ter", 18, 1], ["les choux", 19, 2],
+      // À la mode de chez nous
+      ["À", 21, 1], ["la", 22, 1], ["mode", 23, 1], ["de", 24, 1], ["chez", 25, 1], ["nous", 26, 2]
     ]
   },
   
@@ -183,6 +295,16 @@ const songsData = {
       ["G4", 12, 0.5], ["A4", 12.5, 0.5], ["G4", 13, 0.5], ["F4", 13.5, 0.5], ["E4", 14, 1], ["C4", 15, 1],
       // Trois p'tits tours et puis s'en vont
       ["C4", 16, 0.5], ["D4", 16.5, 0.5], ["E4", 17, 0.5], ["F4", 17.5, 0.5], ["G4", 18, 1], ["C4", 19, 2]
+    ],
+    lyrics: [
+      // Ainsi font, font, font
+      ["Ain", 0, 1], ["si", 1, 1], ["font", 2, 1], ["font font", 3, 1],
+      // Les petites marionnettes
+      ["Les", 4, 1], ["pe", 5, 1], ["ti", 6, 1], ["tes", 7, 1], ["ma", 8, 1], ["rion", 9, 1], ["nettes", 10, 2],
+      // Ainsi font, font, font
+      ["Ain", 12, 0.5], ["si", 12.5, 0.5], ["font", 13, 0.5], ["font", 13.5, 0.5], ["font", 14, 1], ["", 15, 1],
+      // Trois p'tits tours et puis s'en vont
+      ["Trois", 16, 0.5], ["p'tits", 16.5, 0.5], ["tours", 17, 0.5], ["et", 17.5, 0.5], ["puis", 18, 1], ["s'en vont", 19, 2]
     ]
   },
   
@@ -192,11 +314,11 @@ const songsData = {
       // Dans la forêt lointaine
       ["C4", 0, 1], ["E4", 1, 1], ["G4", 2, 2], ["F4", 4, 1], ["A4", 5, 1], ["G4", 6, 2],
       // On entend le coucou
-      ["G4", 8, 1], ["C5", 9, 1], ["B4", 10, 1], ["A4", 11, 1], ["G4", 12, 2],
+      ["On", 8, 1], ["en", 9, 1], ["tend", 10, 1], ["le", 11, 1], ["cou-cou", 12, 2],
       // Du haut de son grand chêne
-      ["E4", 14, 1], ["G4", 15, 1], ["C5", 16, 2], ["A4", 18, 1], ["G4", 19, 1], ["F4", 20, 2],
+      ["Du", 14, 1], ["haut", 15, 1], ["de", 16, 1], ["son", 17, 1], ["grand", 18, 1], ["chê", 19, 1], ["ne", 20, 2],
       // Il répond au hibou
-      ["E4", 22, 1], ["D4", 23, 1], ["C4", 24, 1], ["B3", 25, 1], ["C4", 26, 2]
+      ["Il", 22, 1], ["ré", 23, 1], ["pond", 24, 1], ["au", 25, 1], ["hi-bou", 26, 2]
     ]
   },
   
@@ -211,6 +333,16 @@ const songsData = {
       ["C4", 16, 1], ["D4", 17, 1], ["E4", 18, 1], ["F4", 19, 1], ["E4", 20, 1], ["D4", 21, 1], ["C4", 22, 2],
       // Il s'en allait combattre les éléphants
       ["C4", 24, 1], ["F4", 25, 1], ["E4", 26, 1], ["D4", 27, 1], ["C4", 28, 1], ["G4", 29, 1], ["C4", 30, 2]
+    ],
+    lyrics: [
+      // Un crocodile, s'en allant à la guerre
+      ["Un", 0, 1], ["cro", 1, 1], ["co", 2, 1], ["dile", 3, 1], ["s'en", 4, 1], ["al", 5, 1], ["lant", 6, 2],
+      // Disait au revoir à ses petits enfants
+      ["Di", 8, 1], ["sait", 9, 1], ["au", 10, 1], ["re", 11, 1], ["voir", 12, 1], ["à", 13, 1], ["ses enfants", 14, 2],
+      // Traînant ses pieds, ses pieds dans la poussière
+      ["Traî", 16, 1], ["nant", 17, 1], ["ses", 18, 1], ["pieds", 19, 1], ["dans", 20, 1], ["la", 21, 1], ["poussière", 22, 2],
+      // Il s'en allait combattre les éléphants
+      ["Il", 24, 1], ["s'en", 25, 1], ["al", 26, 1], ["lait", 27, 1], ["com", 28, 1], ["battre", 29, 1], ["les éléphants", 30, 2]
     ]
   }
 };
@@ -219,4 +351,14 @@ const songsData = {
 const songs = {};
 for (const [songKey, songData] of Object.entries(songsData)) {
   songs[songData.displayName] = songData.notes;
-}
+} coucou
+      ["G4", 8, 1], ["C5", 9, 1], ["B4", 10, 1], ["A4", 11, 1], ["G4", 12, 2],
+      // Du haut de son grand chêne
+      ["E4", 14, 1], ["G4", 15, 1], ["C5", 16, 2], ["A4", 18, 1], ["G4", 19, 1], ["F4", 20, 2],
+      // Il répond au hibou
+      ["E4", 22, 1], ["D4", 23, 1], ["C4", 24, 1], ["B3", 25, 1], ["C4", 26, 2]
+    ],
+    lyrics: [
+      // Dans la forêt lointaine
+      ["Dans", 0, 1], ["la", 1, 1], ["fo", 2, 1], ["rêt", 3, 1], ["loin", 4, 1], ["tai", 5, 1], ["ne", 6, 2],
+      // On entend le
