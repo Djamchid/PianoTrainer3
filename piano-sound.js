@@ -1,23 +1,51 @@
-// Ajout de la fonctionnalité audio au piano-trainer.js
-
-// 1. Ajouter ces variables au début du fichier, après les autres déclarations d'état
+// Audio variables and functions for the piano trainer
 let audioContext = null;
 let oscillators = {};
-let soundEnabled = true; // Par défaut, le son est activé
+window.soundEnabled = true; // On utilise window pour le partager avec piano-trainer.js
 
-// 2. Ajouter cette fonction pour initialiser l'Audio Context
+// Initialiser le contexte audio
 function initAudio() {
   try {
+    // Créer un nouveau contexte audio
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    console.log("Audio Context initialized successfully");
+    window.audioContext = audioContext; // Rendre disponible globalement
+    
+    // Vérifier si le contexte est en état suspendu (politique des navigateurs)
+    if (audioContext.state === 'suspended') {
+      // Ajouter un gestionnaire d'événements sur tout le document pour démarrer l'audio
+      const resumeAudio = function() {
+        console.log("Tentative de reprise du contexte audio...");
+        audioContext.resume().then(() => {
+          console.log("AudioContext resumed successfully - state:", audioContext.state);
+        }).catch(error => {
+          console.error("Failed to resume AudioContext:", error);
+        });
+        
+        // Nettoyer après la première interaction
+        document.removeEventListener('click', resumeAudio);
+        document.removeEventListener('touchstart', resumeAudio);
+        document.removeEventListener('keydown', resumeAudio);
+      };
+      
+      // Ajouter plusieurs écouteurs pour augmenter les chances de réussite
+      document.addEventListener('click', resumeAudio);
+      document.addEventListener('touchstart', resumeAudio);
+      document.addEventListener('keydown', resumeAudio);
+      
+      // Informer l'utilisateur
+      console.log("Audio context is suspended. Click anywhere on the page to enable audio.");
+    }
+    
+    console.log("Audio Context initialized successfully, state:", audioContext.state);
     return true;
   } catch (e) {
     console.error("Failed to initialize Audio Context:", e);
+    alert("Votre navigateur ne semble pas prendre en charge l'API Web Audio nécessaire pour le son.");
     return false;
   }
 }
 
-// 3. Fonction pour convertir un nom de note en fréquence
+// Convertir un nom de note en fréquence
 function noteToFrequency(note) {
   // Extraire le nom de la note et l'octave (par exemple "C4" -> "C" et 4)
   const noteRegex = /([A-G]#?)(\d+)/;
@@ -50,39 +78,49 @@ function noteToFrequency(note) {
   return 440 * Math.pow(2, semitoneFromA4 / 12);
 }
 
-// 4. Fonction pour jouer une note
+// Jouer une note
 function playNote(englishNote, duration) {
-  if (!audioContext || !soundEnabled) return;
+  if (!audioContext || !window.soundEnabled) return;
   
-  const freq = noteToFrequency(englishNote);
-  
-  // Créer oscillateur
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
-  
-  oscillator.type = 'triangle'; // Son de piano simplifié
-  oscillator.frequency.value = freq;
-  
-  // Enveloppe sonore pour simuler un piano
-  gainNode.gain.setValueAtTime(0.7, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-  
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
-  
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + duration);
-  
-  // Stocker l'oscillateur pour pouvoir l'arrêter si nécessaire
-  oscillators[englishNote] = oscillator;
-  
-  // Supprimer la référence après la fin du son
-  oscillator.onended = () => {
-    delete oscillators[englishNote];
-  };
+  try {
+    const freq = noteToFrequency(englishNote);
+    console.log(`Jouant la note ${englishNote} à ${freq}Hz pour ${duration}s`);
+    
+    // Créer oscillateur
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    // Utiliser une forme d'onde plus riche pour un son plus audible
+    oscillator.type = 'square'; // 'square' est plus audible que 'triangle'
+    oscillator.frequency.value = freq;
+    
+    // Augmenter le volume
+    gainNode.gain.setValueAtTime(0.9, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration);
+    
+    // Ajouter un test de son pour déboguer
+    console.log(`Note ${englishNote} jouée!`);
+    
+    // Stocker l'oscillateur pour pouvoir l'arrêter si nécessaire
+    oscillators[englishNote] = oscillator;
+    
+    // Supprimer la référence après la fin du son
+    oscillator.onended = () => {
+      delete oscillators[englishNote];
+      console.log(`Note ${englishNote} terminée`);
+    };
+  } catch (e) {
+    console.error(`Erreur lors de la lecture de la note ${englishNote}:`, e);
+  }
 }
 
-// 5. Fonction pour arrêter tous les sons
+// Arrêter tous les sons
 function stopAllSounds() {
   if (!audioContext) return;
   
@@ -97,166 +135,48 @@ function stopAllSounds() {
   oscillators = {};
 }
 
-// 6. Modifier la fonction animate pour déclencher les notes
-function animate(timestamp) {
-  if (!startTime) startTime = timestamp;
-  const elapsedTime = timestamp - startTime;
-  
-  // Calculate current beat based on tempo
-  const beatsPerSecond = tempo / 60;
-  const currentBeat = (elapsedTime / 1000) * beatsPerSecond;
-  
-  // Handle looping
-  let effectiveBeat = currentBeat;
-  
-  if (loopEnabled && currentBeat > totalSongBeats + 4) {
-    // Réinitialiser pour la boucle suivante
-    startTime = timestamp;
-    effectiveBeat = -startOffsetBeats;
-    // Assurer qu'aucun son ne continue à jouer lors de la boucle
-    stopAllSounds();
-  } else if (!loopEnabled && currentBeat > totalSongBeats + 4) {
-    stopAnimation();
-    return;
-  }
-  
-  // Draw background and keyboard
-  drawBackground();
-  drawKeyboard();
-  
-  // Draw notes and play sounds
-  notes.forEach(note => {
-    // Ajouter l'offset de préparation pour le calcul de la position
-    const adjustedStartBeat = note.startBeat + startOffsetBeats;
-    
-    // Calculate y position based on beat - using the adjusted start beat
-    const beatDistance = adjustedStartBeat - effectiveBeat;
-    const y = playLineY - beatsToPixels(beatDistance);
-    
-    // Only draw notes that are on screen
-    if (y > -100 && y < height + 50) {
-      // Determine note status
-      const isAtPlayLine = Math.abs(y - playLineY) < 15;
-      const hasPassedPlayLine = y > playLineY;
-      
-      // Set color based on status
-      if (isAtPlayLine) {
-        ctx.fillStyle = "#4CAF50"; // Green at play line
-        
-        // Play note when it reaches the play line
-        // On vérifie si la note n'a pas encore été jouée
-        if (!note.played && isAtPlayLine) {
-          note.played = true;
-          // Convertir la durée en beats à la durée en secondes
-          const durationInSeconds = note.duration / beatsPerSecond;
-          playNote(note.englishNote, durationInSeconds);
-        }
-      } else if (hasPassedPlayLine) {
-        ctx.fillStyle = "#AAAAAA"; // Gray after passing
-      } else {
-        ctx.fillStyle = note.isBlack ? "#555555" : "#3498db"; // Dark/Blue before
-        // Réinitialiser l'état played quand la note revient (en cas de boucle)
-        if (beatDistance > 2) {
-          note.played = false;
-        }
-      }
-      
-      // Calculate note height based on duration
-      const noteHeight = Math.max(30, beatsToPixels(note.duration));
-      
-      // Draw rectangular note
-      ctx.fillRect(note.x - noteWidth/2, y - noteHeight/2, noteWidth, noteHeight);
-      ctx.strokeStyle = "#333333";
-      ctx.lineWidth = 1;
-      ctx.strokeRect(note.x - noteWidth/2, y - noteHeight/2, noteWidth, noteHeight);
-      
-      // Draw note name
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(note.note, note.x, y + 4);
-    }
-  });
-  
-  // Debug info - afficher la mesure correcte comme un nombre entier
-  ctx.fillStyle = "#333333";
-  ctx.font = "12px Arial";
-  ctx.textAlign = "left";
-  const measureValue = Math.max(0, Math.floor(effectiveBeat + startOffsetBeats));
-  ctx.fillText(`Mesure : ${measureValue}`, 10, 95);
-  
-  // Continue animation
-  animationId = requestAnimationFrame(animate);
-}
-
-// 7. Modifier la fonction startSong pour initialiser l'audio si nécessaire
-function startSong() {
-  const songKey = songSelect.value;
-  
-  if (!songKey) {
-    alert('Veuillez sélectionner une chanson');
-    return;
-  }
-  
-  // Initialize audio context on first play (nécessaire pour les navigateurs modernes)
+// Tester l'audio
+function testAudio() {
   if (!audioContext) {
-    if (!initAudio()) {
-      alert("Impossible d'initialiser l'audio. Vérifiez que votre navigateur prend en charge l'API Web Audio.");
-    }
+    initAudio();
   }
   
-  // Resume audio context if suspended (nécessaire pour Chrome)
   if (audioContext && audioContext.state === 'suspended') {
     audioContext.resume();
   }
   
-  // Stop any current animation
-  stopAnimation();
+  // Jouer un bip de test
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
   
-  // Set current song key and name
-  currentSongKey = songKey;
-  currentSongName = songsData[songKey].displayName;
-  notes = createNotesForSong(songKey);
+  oscillator.type = 'square';
+  oscillator.frequency.value = 440; // La 440Hz, facilement audible
   
-  // Réinitialiser l'état de lecture pour toutes les notes
-  notes.forEach(note => note.played = false);
+  gainNode.gain.value = 0.5;
   
-  // Disable UI controls during playback
-  songSelect.disabled = true;
-  tempoSlider.disabled = true;
-  stopBtn.disabled = false;
-  playBtn.disabled = true;
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
   
-  // Start animation
-  startTime = 0;
-  animationId = requestAnimationFrame(animate);
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + 0.5); // Son court de 0.5 seconde
+  
+  console.log("Test audio exécuté");
+  alert("Un son de test devrait être audible maintenant. L'avez-vous entendu?");
 }
 
-// 8. Modifier la fonction stopAnimation pour arrêter les sons
-function stopAnimation() {
-  if (animationId) {
-    cancelAnimationFrame(animationId);
-    animationId = null;
-  }
+// Ajouter les éléments d'interface pour l'audio
+function initAudioInterface() {
+  // Ajouter le bouton pour activer/désactiver le son
+  addSoundToggleButton();
   
-  // Stop all sounds
-  stopAllSounds();
+  // Ajouter le bouton de test audio
+  addTestAudioButton();
   
-  // Reset state
-  currentSongKey = null;
-  
-  // Reset UI
-  songSelect.disabled = false;
-  tempoSlider.disabled = false;
-  stopBtn.disabled = true;
-  playBtn.disabled = false;
-  
-  // Redraw canvas to clear notes
-  drawBackground();
-  drawKeyboard();
+  // Ajouter un message d'avertissement
+  setupAudioWarning();
 }
 
-// 9. Ajout d'un bouton pour désactiver/activer le son
+// Ajouter un bouton pour activer/désactiver le son
 function addSoundToggleButton() {
   // Créer le conteneur pour le toggle son
   const soundToggle = document.createElement('div');
@@ -266,7 +186,7 @@ function addSoundToggleButton() {
   const soundCheckbox = document.createElement('input');
   soundCheckbox.type = 'checkbox';
   soundCheckbox.id = 'soundCheckbox';
-  soundCheckbox.checked = soundEnabled;
+  soundCheckbox.checked = window.soundEnabled;
   
   // Créer le label
   const soundLabel = document.createElement('label');
@@ -283,55 +203,48 @@ function addSoundToggleButton() {
   
   // Ajouter l'écouteur d'événement
   soundCheckbox.addEventListener('change', () => {
-    soundEnabled = soundCheckbox.checked;
-    if (!soundEnabled) {
+    window.soundEnabled = soundCheckbox.checked;
+    if (!window.soundEnabled) {
       stopAllSounds();
     }
   });
 }
 
-// 10. Modifier la fonction init pour ajouter le bouton de son
-function init() {
-  console.log("Initializing application...");
+// Ajouter un bouton pour tester l'audio
+function addTestAudioButton() {
+  const testButton = document.createElement('button');
+  testButton.textContent = "Tester l'audio";
+  testButton.className = 'control-btn';
+  testButton.style.backgroundColor = '#9b59b6';
+  testButton.style.marginTop = '10px';
+  testButton.addEventListener('click', testAudio);
   
-  // Ensure we have all required elements
-  if (!songSelect) {
-    console.error("Element with ID 'songSelect' not found!");
-  }
-  if (!playBtn) {
-    console.error("Element with ID 'playBtn' not found!");
-  }
-  if (!stopBtn) {
-    console.error("Element with ID 'stopBtn' not found!");
-  }
-  
-  setupPianoKeys();
-  
-  // Verify songsData is available
-  if (typeof songsData === 'undefined') {
-    console.error("songsData is not defined! Make sure songs.js is loaded before piano-trainer.js.");
-  } else {
-    initSongMenu();
-  }
-  
-  drawBackground();
-  drawKeyboard();
-  
-  // Ajouter le bouton pour activer/désactiver le son
-  addSoundToggleButton();
-  
-  // Event listeners
-  playBtn.addEventListener('click', startSong);
-  stopBtn.addEventListener('click', stopAnimation);
-  
-  tempoSlider.addEventListener('input', () => {
-    tempo = parseInt(tempoSlider.value);
-    tempoValue.textContent = tempo;
-  });
-  
-  loopCheckbox.addEventListener('change', () => {
-    loopEnabled = loopCheckbox.checked;
-  });
-  
-  console.log("Application initialized.");
+  // Insérer après les contrôles
+  const controls = document.querySelector('.controls');
+  controls.parentNode.insertBefore(testButton, controls.nextSibling);
 }
+
+// Ajouter un message d'avertissement pour l'audio
+function setupAudioWarning() {
+  // Ajouter un message visible sur l'interface utilisateur
+  const warningDiv = document.createElement('div');
+  warningDiv.style.backgroundColor = '#ffe6e6';
+  warningDiv.style.color = '#990000';
+  warningDiv.style.padding = '10px';
+  warningDiv.style.marginBottom = '15px';
+  warningDiv.style.borderRadius = '5px';
+  warningDiv.style.textAlign = 'center';
+  warningDiv.style.width = '100%';
+  warningDiv.style.maxWidth = '700px';
+  warningDiv.innerHTML = 'Pour activer le son, cliquez d\'abord n\'importe où sur la page puis appuyez sur "Jouer". Vérifiez également que le son de votre appareil est activé.';
+  
+  // Insérer au début du document
+  document.body.insertBefore(warningDiv, document.body.firstChild);
+}
+
+// Rendre les fonctions disponibles globalement
+window.initAudio = initAudio;
+window.playNote = playNote;
+window.stopAllSounds = stopAllSounds;
+window.testAudio = testAudio;
+window.initAudioInterface = initAudioInterface;
