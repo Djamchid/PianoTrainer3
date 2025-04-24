@@ -30,7 +30,27 @@ p.description {
   max-width: 700px;
 }
 
-.song-btn {
+.song-select {
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: white;
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.song-select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.song-select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.control-btn {
   background-color: #3498db;
   color: white;
   border: none;
@@ -38,41 +58,30 @@ p.description {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.2s;
   display: flex;
   align-items: center;
-  transition: background-color 0.2s;
-}
-
-.song-btn:hover {
-  background-color: #2980b9;
-}
-
-.song-btn.active {
-  background-color: #27ae60;
-}
-
-.song-btn svg {
-  margin-right: 5px;
-}
-
-.control-btn {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
 }
 
 .control-btn:hover {
-  background-color: #c0392b;
+  background-color: #2980b9;
+}
+
+.control-btn svg {
+  margin-right: 5px;
 }
 
 .control-btn:disabled {
   background-color: #95a5a6;
   cursor: not-allowed;
+}
+
+#stopBtn {
+  background-color: #e74c3c;
+}
+
+#stopBtn:hover {
+  background-color: #c0392b;
 }
 
 .loop-toggle {
