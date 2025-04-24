@@ -12,6 +12,16 @@
     Cet outil affiche des partitions animées pour les débutants. Jouez les notes sur votre piano physique lorsqu'elles atteignent la ligne rouge.
   </p>
   
+  <div class="loop-toggle">
+    <input type="checkbox" id="loopCheckbox" checked>
+    <label for="loopCheckbox">Jouer en boucle</label>
+  </div>
+  
+  <div class="tempo-control">
+    <label for="tempoSlider" class="tempo-label">Tempo: <span id="tempoValue">80</span> BPM</label>
+    <input type="range" id="tempoSlider" min="40" max="160" value="80" step="5">
+  </div>
+  
   <div class="controls">
     <select id="songSelect" class="song-select">
       <option value="">Sélectionnez une chanson</option>
@@ -31,16 +41,6 @@
       </svg>
       Arrêter
     </button>
-  </div>
-  
-  <div class="loop-toggle">
-    <input type="checkbox" id="loopCheckbox" checked>
-    <label for="loopCheckbox">Jouer en boucle</label>
-  </div>
-  
-  <div class="tempo-control">
-    <label for="tempoSlider" class="tempo-label">Tempo: <span id="tempoValue">80</span> BPM</label>
-    <input type="range" id="tempoSlider" min="40" max="160" value="80" step="5">
   </div>
   
   <div class="canvas-container">
