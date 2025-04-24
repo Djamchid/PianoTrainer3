@@ -3,22 +3,12 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 // UI elements
-const twinkleBtn = document.getElementById('twinkleBtn');
-const maryBtn = document.getElementById('maryBtn');
-const jingleBtn = document.getElementById('jingleBtn');
-const birthdayBtn = document.getElementById('birthdayBtn');
+const songSelect = document.getElementById('songSelect');
+const playBtn = document.getElementById('playBtn');
 const stopBtn = document.getElementById('stopBtn');
 const tempoSlider = document.getElementById('tempoSlider');
 const tempoValue = document.getElementById('tempoValue');
 const loopCheckbox = document.getElementById('loopCheckbox');
-
-// Map buttons to song keys
-const buttonSongMap = {
-  'twinkleBtn': 'twinkle',
-  'maryBtn': 'mary',
-  'jingleBtn': 'jingle',
-  'birthdayBtn': 'birthday'
-};
 
 // Configuration
 const width = canvas.width;
@@ -92,6 +82,22 @@ function setupPianoKeys() {
         isBlack: true
       });
     }
+  }
+}
+
+// Fonction pour initialiser le menu des chansons
+function initSongMenu() {
+  // Vider le sélecteur (sauf l'option par défaut)
+  while (songSelect.options.length > 1) {
+    songSelect.remove(1);
+  }
+  
+  // Ajouter chaque chanson du fichier songs.js au menu
+  for (const [songKey, songData] of Object.entries(songsData)) {
+    const option = document.createElement('option');
+    option.value = songKey;
+    option.textContent = songData.displayName;
+    songSelect.appendChild(option);
   }
 }
 
@@ -303,27 +309,27 @@ function animate(timestamp) {
 }
 
 // Start playing a song
-function startSong(songKey) {
+function startSong() {
+  const songKey = songSelect.value;
+  
+  if (!songKey) {
+    alert('Veuillez sélectionner une chanson');
+    return;
+  }
+  
   // Stop any current animation
   stopAnimation();
-  
-  // Remove active class from all buttons
-  document.querySelectorAll('.song-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
   
   // Set current song key and name
   currentSongKey = songKey;
   currentSongName = songsData[songKey].displayName;
   notes = createNotesForSong(songKey);
   
-  // Add active class to selected button
-  const buttonId = Object.keys(buttonSongMap).find(btnId => buttonSongMap[btnId] === songKey);
-  if (buttonId) document.getElementById(buttonId).classList.add('active');
-  
-  // Disable tempo slider and enable stop button
+  // Disable UI controls during playback
+  songSelect.disabled = true;
   tempoSlider.disabled = true;
   stopBtn.disabled = false;
+  playBtn.disabled = true;
   
   // Start animation
   startTime = 0;
@@ -341,11 +347,10 @@ function stopAnimation() {
   currentSongKey = null;
   
   // Reset UI
-  document.querySelectorAll('.song-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
+  songSelect.disabled = false;
   tempoSlider.disabled = false;
   stopBtn.disabled = true;
+  playBtn.disabled = false;
   
   // Redraw canvas to clear notes
   drawBackground();
@@ -355,14 +360,12 @@ function stopAnimation() {
 // Initialize
 function init() {
   setupPianoKeys();
+  initSongMenu();
   drawBackground();
   drawKeyboard();
   
   // Event listeners
-  twinkleBtn.addEventListener('click', () => startSong("twinkle"));
-  maryBtn.addEventListener('click', () => startSong("mary"));
-  jingleBtn.addEventListener('click', () => startSong("jingle"));
-  birthdayBtn.addEventListener('click', () => startSong("birthday"));
+  playBtn.addEventListener('click', startSong);
   stopBtn.addEventListener('click', stopAnimation);
   
   tempoSlider.addEventListener('input', () => {
@@ -373,16 +376,6 @@ function init() {
   loopCheckbox.addEventListener('change', () => {
     loopEnabled = loopCheckbox.checked;
   });
-  
-  // Update button text content with song names from songsData
-  for (const [buttonId, songKey] of Object.entries(buttonSongMap)) {
-    const button = document.getElementById(buttonId);
-    if (button && songsData[songKey]) {
-      // Préserver l'icône SVG en mettant à jour uniquement le texte
-      const iconHTML = button.innerHTML.split('</svg>')[0] + '</svg>';
-      button.innerHTML = iconHTML + ' ' + songsData[songKey].displayName;
-    }
-  }
 }
 
 // Start the app
