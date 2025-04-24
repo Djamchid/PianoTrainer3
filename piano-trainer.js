@@ -32,6 +32,9 @@ let tempo = parseInt(tempoSlider.value);
 let loopEnabled = loopCheckbox.checked;
 let totalSongBeats = 0; // Pour suivre la longueur totale de la chanson
 
+// Audio state variables - référence aux variables définies dans piano-sound.js
+let soundEnabled = true; // Par défaut, le son est activé
+
 // Convert English note name to French
 function translateNote(englishNote) {
   // Extract note and octave (e.g., "C4" -> "C" and "4")
@@ -251,6 +254,10 @@ function animate(timestamp) {
     // Réinitialiser pour la boucle suivante
     startTime = timestamp;
     effectiveBeat = -startOffsetBeats; // Commencer à une valeur négative pour la préparation
+    // Assurer qu'aucun son ne continue à jouer lors de la boucle
+    if (typeof stopAllSounds === 'function') {
+      stopAllSounds();
+    }
   } else if (!loopEnabled && currentBeat > totalSongBeats + 4) {
     stopAnimation();
     return;
@@ -278,10 +285,23 @@ function animate(timestamp) {
       // Set color based on status
       if (isAtPlayLine) {
         ctx.fillStyle = "#4CAF50"; // Green at play line
+        
+        // Play note when it reaches the play line
+        // On vérifie si la note n'a pas encore été jouée
+        if (!note.played && isAtPlayLine && typeof playNote === 'function') {
+          note.played = true;
+          // Convertir la durée en beats à la durée en secondes
+          const durationInSeconds = note.duration / beatsPerSecond;
+          playNote(note.englishNote, durationInSeconds);
+        }
       } else if (hasPassedPlayLine) {
         ctx.fillStyle = "#AAAAAA"; // Gray after passing
       } else {
         ctx.fillStyle = note.isBlack ? "#555555" : "#3498db"; // Dark/Blue before
+        // Réinitialiser l'état played quand la note revient (en cas de boucle)
+        if (beatDistance > 2) {
+          note.played = false;
+        }
       }
       
       // Calculate note height based on duration
@@ -321,6 +341,20 @@ function startSong() {
     return;
   }
   
+  // Initialize audio context on first play (nécessaire pour les navigateurs modernes)
+  if (typeof initAudio === 'function') {
+    if (!window.audioContext) {
+      if (!initAudio()) {
+        alert("Impossible d'initialiser l'audio. Vérifiez que votre navigateur prend en charge l'API Web Audio.");
+      }
+    }
+  
+    // Resume audio context if suspended (nécessaire pour Chrome)
+    if (window.audioContext && window.audioContext.state === 'suspended') {
+      window.audioContext.resume();
+    }
+  }
+  
   // Stop any current animation
   stopAnimation();
   
@@ -328,6 +362,9 @@ function startSong() {
   currentSongKey = songKey;
   currentSongName = songsData[songKey].displayName;
   notes = createNotesForSong(songKey);
+  
+  // Réinitialiser l'état de lecture pour toutes les notes
+  notes.forEach(note => note.played = false);
   
   // Disable UI controls during playback
   songSelect.disabled = true;
@@ -345,6 +382,11 @@ function stopAnimation() {
   if (animationId) {
     cancelAnimationFrame(animationId);
     animationId = null;
+  }
+  
+  // Stop all sounds
+  if (typeof stopAllSounds === 'function') {
+    stopAllSounds();
   }
   
   // Reset state
@@ -400,6 +442,11 @@ function init() {
   loopCheckbox.addEventListener('change', () => {
     loopEnabled = loopCheckbox.checked;
   });
+  
+  // Initialize audio if available
+  if (typeof initAudioInterface === 'function') {
+    initAudioInterface();
+  }
   
   console.log("Application initialized.");
 }
