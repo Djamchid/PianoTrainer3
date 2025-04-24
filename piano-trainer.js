@@ -283,11 +283,12 @@ function animate(timestamp) {
     }
   });
   
-  // Debug info - afficher la mesure correcte (sans l'offset de préparation)
+  // Debug info - afficher la mesure correcte comme un nombre entier
   ctx.fillStyle = "#333333";
   ctx.font = "12px Arial";
   ctx.textAlign = "left";
-  ctx.fillText(`Mesure : ${Math.max(0, Math.floor(effectiveBeat + startOffsetBeats))}`, 10, 95);
+  const measureValue = Math.max(0, Math.floor(effectiveBeat + startOffsetBeats));
+  ctx.fillText(`Mesure : ${measureValue}`, 10, 95);
   
   // Continue animation
   animationId = requestAnimationFrame(animate);
