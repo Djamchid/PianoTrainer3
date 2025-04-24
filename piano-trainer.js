@@ -21,7 +21,7 @@ const playLineY = keyboardStartY; // Ligne rouge à la hauteur du haut des touch
 const whiteKeyWidth = 30;
 const blackKeyWidth = 20;
 const noteWidth = 25;      // Width for rectangular notes
-const startOffsetBeats = 4; // Notes start 4 beats before their actual start time
+const startOffsetBeats = 4; // Préparation de 4 temps avant la première note
 
 // State
 let animationId = null;
@@ -32,6 +32,7 @@ let currentSongName = "";
 let startTime = 0;
 let tempo = parseInt(tempoSlider.value);
 let loopEnabled = loopCheckbox.checked;
+let totalSongBeats = 0; // Pour suivre la longueur totale de la chanson
 
 // Convert English note name to French
 function translateNote(englishNote) {
@@ -96,7 +97,7 @@ function createNotesForSong(songName) {
   const songData = songs[songName];
   if (!songData) return [];
   
-  return songData.map((noteData, index) => {
+  const notesWithPositions = songData.map((noteData, index) => {
     const [englishNoteName, startBeat, duration] = noteData;
     
     // Find key position
@@ -104,18 +105,27 @@ function createNotesForSong(songName) {
     const x = key ? key.x + key.width/2 : width/2;
     const isBlack = key ? key.isBlack : false;
     
-    // Add startOffsetBeats to each note's startBeat to give preparation time
     return {
       id: index,
       englishNote: englishNoteName,
       note: key ? key.note : translateNote(englishNoteName),
       x: x,
-      startBeat: startBeat + startOffsetBeats,  // Add the offset here
+      startBeat: startBeat, // Gardons le startBeat original
       duration: duration,
       isBlack: isBlack,
       played: false
     };
   });
+  
+  // Calculer la longueur totale de la chanson
+  if (notesWithPositions.length > 0) {
+    const lastNote = notesWithPositions[notesWithPositions.length - 1];
+    totalSongBeats = lastNote.startBeat + lastNote.duration;
+  } else {
+    totalSongBeats = 0;
+  }
+  
+  return notesWithPositions;
 }
 
 // Draw background elements
@@ -216,18 +226,14 @@ function animate(timestamp) {
   const beatsPerSecond = tempo / 60;
   const currentBeat = (elapsedTime / 1000) * beatsPerSecond;
   
-  // Get total song length in beats
-  const lastNote = notes[notes.length - 1];
-  const songLengthInBeats = lastNote ? lastNote.startBeat + lastNote.duration : 0;
-  
   // Handle looping
   let effectiveBeat = currentBeat;
-  if (loopEnabled && currentBeat > songLengthInBeats + 4) {
-    // Reset for next loop - set start time so that current beat becomes negative
-    // This gives preparation time for the next loop
+  
+  if (loopEnabled && currentBeat > totalSongBeats + 4) {
+    // Réinitialiser pour la boucle suivante
     startTime = timestamp;
-    effectiveBeat = -startOffsetBeats; // Start at negative beat to show notes from top
-  } else if (!loopEnabled && currentBeat > songLengthInBeats + 4) {
+    effectiveBeat = 0;
+  } else if (!loopEnabled && currentBeat > totalSongBeats + 4) {
     stopAnimation();
     return;
   }
@@ -238,8 +244,11 @@ function animate(timestamp) {
   
   // Draw notes
   notes.forEach(note => {
-    // Calculate y position based on beat
-    const beatDistance = note.startBeat - effectiveBeat;
+    // Ajouter l'offset de préparation pour le calcul de la position
+    const adjustedStartBeat = note.startBeat + startOffsetBeats;
+    
+    // Calculate y position based on beat - using the adjusted start beat
+    const beatDistance = adjustedStartBeat - effectiveBeat;
     const y = playLineY - beatsToPixels(beatDistance);
     
     // Only draw notes that are on screen
@@ -274,11 +283,11 @@ function animate(timestamp) {
     }
   });
   
-  // Debug info
+  // Debug info - afficher la mesure correcte (sans l'offset de préparation)
   ctx.fillStyle = "#333333";
   ctx.font = "12px Arial";
   ctx.textAlign = "left";
-  ctx.fillText(`Mesure : ${Math.max(0, effectiveBeat - startOffsetBeats).toFixed(1)}`, 10, 95);
+  ctx.fillText(`Mesure : ${Math.max(0, effectiveBeat).toFixed(1)}`, 10, 95);
   
   // Continue animation
   animationId = requestAnimationFrame(animate);
@@ -312,7 +321,7 @@ function startSong(songName) {
   tempoSlider.disabled = true;
   stopBtn.disabled = false;
   
-  // Start animation with a clean startTime
+  // Start animation
   startTime = 0;
   animationId = requestAnimationFrame(animate);
 }
