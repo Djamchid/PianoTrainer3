@@ -17,6 +17,8 @@
     <label for="loopCheckbox">Jouer en boucle</label>
   </div>
   
+  <!-- La section pour le toggle des paroles sera ajoutée dynamiquement par JavaScript -->
+  
   <div class="tempo-control">
     <label for="tempoSlider" class="tempo-label">Tempo: <span id="tempoValue">80</span> BPM</label>
     <input type="range" id="tempoSlider" min="40" max="160" value="80" step="5">
@@ -58,11 +60,13 @@
       <li>Ajustez le tempo avec le curseur si la musique est trop rapide ou trop lente</li>
       <li>Le clavier en bas montre quelles touches jouer</li>
       <li>Activez ou désactivez la lecture en boucle selon vos préférences</li>
+      <li>Vous pouvez afficher ou masquer les paroles avec l'option correspondante</li>
     </ol>
   </div>
   
   <div class="footer">
     <p>Entraînez-vous à votre rythme ! Les notes deviennent vertes quand elles atteignent la ligne de jeu.</p>
+    <p>Les paroles des chansons apparaissent à côté des notes pour vous aider à chanter en jouant.</p>
   </div>
 
   <script src="songs.js"></script>
