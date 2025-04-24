@@ -104,12 +104,13 @@ function createNotesForSong(songName) {
     const x = key ? key.x + key.width/2 : width/2;
     const isBlack = key ? key.isBlack : false;
     
+    // Add startOffsetBeats to each note's startBeat to give preparation time
     return {
       id: index,
       englishNote: englishNoteName,
       note: key ? key.note : translateNote(englishNoteName),
       x: x,
-      startBeat: startBeat,
+      startBeat: startBeat + startOffsetBeats,  // Add the offset here
       duration: duration,
       isBlack: isBlack,
       played: false
@@ -213,7 +214,7 @@ function animate(timestamp) {
   
   // Calculate current beat based on tempo
   const beatsPerSecond = tempo / 60;
-  const currentBeat = (elapsedTime / 1000) * beatsPerSecond - startOffsetBeats; // Adjust current beat to account for offset
+  const currentBeat = (elapsedTime / 1000) * beatsPerSecond;
   
   // Get total song length in beats
   const lastNote = notes[notes.length - 1];
@@ -223,8 +224,8 @@ function animate(timestamp) {
   let effectiveBeat = currentBeat;
   if (loopEnabled && currentBeat > songLengthInBeats + 4) {
     // Reset for next loop
-    startTime = timestamp - ((startOffsetBeats / beatsPerSecond) * 1000); // Adjust startTime for offset
-    effectiveBeat = -startOffsetBeats; // Start at negative beat to show notes from top
+    startTime = timestamp;
+    effectiveBeat = 0;
   } else if (!loopEnabled && currentBeat > songLengthInBeats + 4) {
     stopAnimation();
     return;
@@ -276,7 +277,7 @@ function animate(timestamp) {
   ctx.fillStyle = "#333333";
   ctx.font = "12px Arial";
   ctx.textAlign = "left";
-  ctx.fillText(`Mesure : ${Math.max(0, effectiveBeat).toFixed(1)}`, 10, 95);
+  ctx.fillText(`Mesure : ${Math.max(0, effectiveBeat - startOffsetBeats).toFixed(1)}`, 10, 95);
   
   // Continue animation
   animationId = requestAnimationFrame(animate);
@@ -310,7 +311,7 @@ function startSong(songName) {
   tempoSlider.disabled = true;
   stopBtn.disabled = false;
   
-  // Start animation
+  // Start animation with a clean startTime
   startTime = 0;
   animationId = requestAnimationFrame(animate);
 }
