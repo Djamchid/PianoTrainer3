@@ -21,6 +21,7 @@ const playLineY = keyboardStartY; // Ligne rouge à la hauteur du haut des touch
 const whiteKeyWidth = 30;
 const blackKeyWidth = 20;
 const noteWidth = 25;      // Width for rectangular notes
+const startOffsetBeats = 4; // Notes start 4 beats before their actual start time
 
 // State
 let animationId = null;
@@ -212,7 +213,7 @@ function animate(timestamp) {
   
   // Calculate current beat based on tempo
   const beatsPerSecond = tempo / 60;
-  const currentBeat = (elapsedTime / 1000) * beatsPerSecond;
+  const currentBeat = (elapsedTime / 1000) * beatsPerSecond - startOffsetBeats; // Adjust current beat to account for offset
   
   // Get total song length in beats
   const lastNote = notes[notes.length - 1];
@@ -222,8 +223,8 @@ function animate(timestamp) {
   let effectiveBeat = currentBeat;
   if (loopEnabled && currentBeat > songLengthInBeats + 4) {
     // Reset for next loop
-    startTime = timestamp;
-    effectiveBeat = 0;
+    startTime = timestamp - ((startOffsetBeats / beatsPerSecond) * 1000); // Adjust startTime for offset
+    effectiveBeat = -startOffsetBeats; // Start at negative beat to show notes from top
   } else if (!loopEnabled && currentBeat > songLengthInBeats + 4) {
     stopAnimation();
     return;
@@ -275,7 +276,7 @@ function animate(timestamp) {
   ctx.fillStyle = "#333333";
   ctx.font = "12px Arial";
   ctx.textAlign = "left";
-  ctx.fillText(`Mesure : ${effectiveBeat.toFixed(1)}`, 10, 95);
+  ctx.fillText(`Mesure : ${Math.max(0, effectiveBeat).toFixed(1)}`, 10, 95);
   
   // Continue animation
   animationId = requestAnimationFrame(animate);
