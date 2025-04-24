@@ -223,9 +223,10 @@ function animate(timestamp) {
   // Handle looping
   let effectiveBeat = currentBeat;
   if (loopEnabled && currentBeat > songLengthInBeats + 4) {
-    // Reset for next loop
+    // Reset for next loop - set start time so that current beat becomes negative
+    // This gives preparation time for the next loop
     startTime = timestamp;
-    effectiveBeat = 0;
+    effectiveBeat = -startOffsetBeats; // Start at negative beat to show notes from top
   } else if (!loopEnabled && currentBeat > songLengthInBeats + 4) {
     stopAnimation();
     return;
