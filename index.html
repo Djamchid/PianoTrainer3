@@ -13,43 +13,24 @@
   </p>
   
   <div class="controls">
-    <button id="twinkleBtn" class="song-btn">
+    <select id="songSelect" class="song-select">
+      <option value="">Sélectionnez une chanson</option>
+      <!-- Options générées dynamiquement par JavaScript -->
+    </select>
+    
+    <button id="playBtn" class="control-btn">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18V5l12-2v13"></path>
-        <circle cx="6" cy="18" r="3"></circle>
-        <circle cx="18" cy="16" r="3"></circle>
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
       </svg>
-      <!-- Le texte sera mis à jour via JavaScript -->
+      Jouer
     </button>
     
-    <button id="maryBtn" class="song-btn">
+    <button id="stopBtn" class="control-btn" disabled>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18V5l12-2v13"></path>
-        <circle cx="6" cy="18" r="3"></circle>
-        <circle cx="18" cy="16" r="3"></circle>
+        <rect x="6" y="6" width="12" height="12"></rect>
       </svg>
-      <!-- Le texte sera mis à jour via JavaScript -->
+      Arrêter
     </button>
-    
-    <button id="jingleBtn" class="song-btn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18V5l12-2v13"></path>
-        <circle cx="6" cy="18" r="3"></circle>
-        <circle cx="18" cy="16" r="3"></circle>
-      </svg>
-      <!-- Le texte sera mis à jour via JavaScript -->
-    </button>
-    
-    <button id="birthdayBtn" class="song-btn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18V5l12-2v13"></path>
-        <circle cx="6" cy="18" r="3"></circle>
-        <circle cx="18" cy="16" r="3"></circle>
-      </svg>
-      <!-- Le texte sera mis à jour via JavaScript -->
-    </button>
-    
-    <button id="stopBtn" class="control-btn" disabled>Arrêter</button>
   </div>
   
   <div class="loop-toggle">
@@ -69,7 +50,8 @@
   <div class="instructions">
     <h3>Comment utiliser cet outil :</h3>
     <ol>
-      <li>Sélectionnez un air depuis les boutons ci-dessus</li>
+      <li>Sélectionnez un air depuis le menu déroulant ci-dessus</li>
+      <li>Cliquez sur le bouton Jouer pour démarrer la musique</li>
       <li>Les notes défileront vers le bas en direction de la ligne rouge</li>
       <li>Jouez chaque note sur votre piano physique quand elle atteint la ligne rouge</li>
       <li>Les notes deviennent vertes quand c'est le moment de les jouer</li>
