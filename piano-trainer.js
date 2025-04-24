@@ -87,6 +87,9 @@ function setupPianoKeys() {
 
 // Fonction pour initialiser le menu des chansons
 function initSongMenu() {
+  console.log("Initializing song menu...");
+  console.log("songsData keys:", Object.keys(songsData));
+  
   // Vider le sélecteur (sauf l'option par défaut)
   while (songSelect.options.length > 1) {
     songSelect.remove(1);
@@ -98,6 +101,7 @@ function initSongMenu() {
     option.value = songKey;
     option.textContent = songData.displayName;
     songSelect.appendChild(option);
+    console.log(`Added song: ${songData.displayName}`);
   }
 }
 
@@ -359,8 +363,28 @@ function stopAnimation() {
 
 // Initialize
 function init() {
+  console.log("Initializing application...");
+  
+  // Ensure we have all required elements
+  if (!songSelect) {
+    console.error("Element with ID 'songSelect' not found!");
+  }
+  if (!playBtn) {
+    console.error("Element with ID 'playBtn' not found!");
+  }
+  if (!stopBtn) {
+    console.error("Element with ID 'stopBtn' not found!");
+  }
+  
   setupPianoKeys();
-  initSongMenu();
+  
+  // Verify songsData is available
+  if (typeof songsData === 'undefined') {
+    console.error("songsData is not defined! Make sure songs.js is loaded before piano-trainer.js.");
+  } else {
+    initSongMenu();
+  }
+  
   drawBackground();
   drawKeyboard();
   
@@ -376,7 +400,9 @@ function init() {
   loopCheckbox.addEventListener('change', () => {
     loopEnabled = loopCheckbox.checked;
   });
+  
+  console.log("Application initialized.");
 }
 
-// Start the app
-init();
+// Make sure the DOM is fully loaded before initializing
+document.addEventListener('DOMContentLoaded', init);
