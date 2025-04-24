@@ -314,6 +314,16 @@ const songsData = {
       // Dans la forêt lointaine
       ["C4", 0, 1], ["E4", 1, 1], ["G4", 2, 2], ["F4", 4, 1], ["A4", 5, 1], ["G4", 6, 2],
       // On entend le coucou
+      ["G4", 8, 1], ["C5", 9, 1], ["B4", 10, 1], ["A4", 11, 1], ["G4", 12, 2],
+      // Du haut de son grand chêne
+      ["E4", 14, 1], ["G4", 15, 1], ["C5", 16, 2], ["A4", 18, 1], ["G4", 19, 1], ["F4", 20, 2],
+      // Il répond au hibou
+      ["E4", 22, 1], ["D4", 23, 1], ["C4", 24, 1], ["B3", 25, 1], ["C4", 26, 2]
+    ],
+    lyrics: [
+      // Dans la forêt lointaine
+      ["Dans", 0, 1], ["la", 1, 1], ["fo", 2, 1], ["rêt", 3, 1], ["loin", 4, 1], ["tai", 5, 1], ["ne", 6, 2],
+      // On entend le coucou
       ["On", 8, 1], ["en", 9, 1], ["tend", 10, 1], ["le", 11, 1], ["cou-cou", 12, 2],
       // Du haut de son grand chêne
       ["Du", 14, 1], ["haut", 15, 1], ["de", 16, 1], ["son", 17, 1], ["grand", 18, 1], ["chê", 19, 1], ["ne", 20, 2],
@@ -351,14 +361,4 @@ const songsData = {
 const songs = {};
 for (const [songKey, songData] of Object.entries(songsData)) {
   songs[songData.displayName] = songData.notes;
-} coucou
-      ["G4", 8, 1], ["C5", 9, 1], ["B4", 10, 1], ["A4", 11, 1], ["G4", 12, 2],
-      // Du haut de son grand chêne
-      ["E4", 14, 1], ["G4", 15, 1], ["C5", 16, 2], ["A4", 18, 1], ["G4", 19, 1], ["F4", 20, 2],
-      // Il répond au hibou
-      ["E4", 22, 1], ["D4", 23, 1], ["C4", 24, 1], ["B3", 25, 1], ["C4", 26, 2]
-    ],
-    lyrics: [
-      // Dans la forêt lointaine
-      ["Dans", 0, 1], ["la", 1, 1], ["fo", 2, 1], ["rêt", 3, 1], ["loin", 4, 1], ["tai", 5, 1], ["ne", 6, 2],
-      // On entend le
+}
