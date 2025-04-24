@@ -232,7 +232,7 @@ function animate(timestamp) {
   if (loopEnabled && currentBeat > totalSongBeats + 4) {
     // Réinitialiser pour la boucle suivante
     startTime = timestamp;
-    effectiveBeat = 0;
+    effectiveBeat = -startOffsetBeats; // Commencer à une valeur négative pour la préparation
   } else if (!loopEnabled && currentBeat > totalSongBeats + 4) {
     stopAnimation();
     return;
@@ -287,7 +287,7 @@ function animate(timestamp) {
   ctx.fillStyle = "#333333";
   ctx.font = "12px Arial";
   ctx.textAlign = "left";
-  ctx.fillText(`Mesure : ${Math.max(0, effectiveBeat).toFixed(1)}`, 10, 95);
+  ctx.fillText(`Mesure : ${Math.max(0, Math.floor(effectiveBeat + startOffsetBeats))}`, 10, 95);
   
   // Continue animation
   animationId = requestAnimationFrame(animate);
