@@ -9,6 +9,7 @@ const stopBtn = document.getElementById('stopBtn');
 const tempoSlider = document.getElementById('tempoSlider');
 const tempoValue = document.getElementById('tempoValue');
 const loopCheckbox = document.getElementById('loopCheckbox');
+const lyricsCheckbox = document.getElementById('lyricsCheckbox');
 
 // Configuration
 const width = canvas.width;
@@ -24,12 +25,14 @@ const startOffsetBeats = 4; // Préparation de 4 temps avant la première note
 // State
 let animationId = null;
 let notes = [];
+let lyrics = []; // Tableau pour stocker les paroles
 let pianoKeys = [];
 let currentSongKey = null;
 let currentSongName = "";
 let startTime = 0;
 let tempo = parseInt(tempoSlider.value);
 let loopEnabled = loopCheckbox.checked;
+let lyricsEnabled = true; // Activé par défaut
 let totalSongBeats = 0; // Pour suivre la longueur totale de la chanson
 
 // Audio state variables - référence aux variables définies dans piano-sound.js
@@ -113,10 +116,10 @@ function beatsToPixels(beats) {
   return beats * 80; // 80 pixels per beat
 }
 
-// Create notes for a song
+// Create notes and lyrics for a song
 function createNotesForSong(songKey) {
   const songData = songsData[songKey];
-  if (!songData) return [];
+  if (!songData) return { notes: [], lyrics: [] };
   
   const notesWithPositions = songData.notes.map((noteData, index) => {
     const [englishNoteName, startBeat, duration] = noteData;
@@ -138,6 +141,27 @@ function createNotesForSong(songKey) {
     };
   });
   
+  // Créer les paroles avec positions si elles existent
+  const lyricsWithPositions = songData.lyrics ? songData.lyrics.map((lyricData, index) => {
+    const [text, startBeat, duration] = lyricData;
+    
+    // On lie chaque parole à la note correspondante si possible
+    const relatedNote = notesWithPositions.find(n => 
+      Math.abs(n.startBeat - startBeat) < 0.1 && 
+      Math.abs(n.duration - duration) < 0.1
+    );
+    
+    const x = relatedNote ? relatedNote.x : width/2;
+    
+    return {
+      id: index,
+      text: text,
+      x: x,
+      startBeat: startBeat,
+      duration: duration
+    };
+  }) : [];
+  
   // Calculer la longueur totale de la chanson
   if (notesWithPositions.length > 0) {
     const lastNote = notesWithPositions[notesWithPositions.length - 1];
@@ -146,7 +170,10 @@ function createNotesForSong(songKey) {
     totalSongBeats = 0;
   }
   
-  return notesWithPositions;
+  return { 
+    notes: notesWithPositions,
+    lyrics: lyricsWithPositions
+  };
 }
 
 // Draw background elements
@@ -199,6 +226,10 @@ function drawBackground() {
     
     if (loopEnabled) {
       ctx.fillText("Lecture en boucle activée", width/2, 75);
+    }
+    
+    if (lyricsEnabled) {
+      ctx.fillText("Paroles activées", width/2, 95);
     }
   }
 }
@@ -321,12 +352,62 @@ function animate(timestamp) {
     }
   });
   
+  // Dessiner les paroles si activées
+  if (lyricsEnabled && lyrics.length > 0) {
+    lyrics.forEach(lyric => {
+      // Ajouter l'offset de préparation pour le calcul de la position
+      const adjustedStartBeat = lyric.startBeat + startOffsetBeats;
+      
+      // Calculer la position y basée sur le temps
+      const beatDistance = adjustedStartBeat - effectiveBeat;
+      const y = playLineY - beatsToPixels(beatDistance);
+      
+      // Ne dessiner que les paroles visibles à l'écran
+      if (y > -100 && y < height + 50) {
+        // Déterminer le statut de la parole
+        const isAtPlayLine = Math.abs(y - playLineY) < 15;
+        const hasPassedPlayLine = y > playLineY;
+        
+        // Définir la couleur selon le statut
+        if (isAtPlayLine) {
+          ctx.fillStyle = "#4CAF50"; // Vert à la ligne de jeu
+        } else if (hasPassedPlayLine) {
+          ctx.fillStyle = "#AAAAAA"; // Gris après le passage
+        } else {
+          ctx.fillStyle = "#E67E22"; // Orange avant
+        }
+        
+        // Calculer la hauteur du texte
+        const textHeight = Math.max(30, beatsToPixels(lyric.duration));
+        
+        // Dessiner le texte des paroles
+        if (lyric.text) {
+          // Position décalée pour éviter de chevaucher les notes
+          const textX = lyric.x + 40; // Décalage à droite des notes
+          
+          // Fond pour le texte pour plus de lisibilité
+          if (lyric.text.trim() !== "") {
+            const textWidth = ctx.measureText(lyric.text).width;
+            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+            ctx.fillRect(textX - 5, y - 15, textWidth + 10, 30);
+            
+            // Dessiner le texte
+            ctx.fillStyle = isAtPlayLine ? "#4CAF50" : (hasPassedPlayLine ? "#777777" : "#E67E22");
+            ctx.font = "bold 14px Arial";
+            ctx.textAlign = "left";
+            ctx.fillText(lyric.text, textX, y + 5);
+          }
+        }
+      }
+    });
+  }
+  
   // Debug info - afficher la mesure correcte comme un nombre entier
   ctx.fillStyle = "#333333";
   ctx.font = "12px Arial";
   ctx.textAlign = "left";
   const measureValue = Math.max(0, Math.floor(effectiveBeat + startOffsetBeats));
-  ctx.fillText(`Mesure : ${measureValue}`, 10, 95);
+  ctx.fillText(`Mesure : ${measureValue}`, 10, 115);
   
   // Continue animation
   animationId = requestAnimationFrame(animate);
@@ -361,7 +442,11 @@ function startSong() {
   // Set current song key and name
   currentSongKey = songKey;
   currentSongName = songsData[songKey].displayName;
-  notes = createNotesForSong(songKey);
+  
+  // Créer les notes et les paroles
+  const songElements = createNotesForSong(songKey);
+  notes = songElements.notes;
+  lyrics = songElements.lyrics;
   
   // Réinitialiser l'état de lecture pour toutes les notes
   notes.forEach(note => note.played = false);
@@ -403,6 +488,42 @@ function stopAnimation() {
   drawKeyboard();
 }
 
+// Add toggle button for lyrics
+function addLyricsToggle() {
+  // Créer le conteneur pour le toggle paroles
+  const lyricsToggle = document.createElement('div');
+  lyricsToggle.className = 'loop-toggle';
+  
+  // Créer la case à cocher
+  const lyricsCheckbox = document.createElement('input');
+  lyricsCheckbox.type = 'checkbox';
+  lyricsCheckbox.id = 'lyricsCheckbox';
+  lyricsCheckbox.checked = lyricsEnabled;
+  
+  // Créer le label
+  const lyricsLabel = document.createElement('label');
+  lyricsLabel.htmlFor = 'lyricsCheckbox';
+  lyricsLabel.textContent = 'Afficher les paroles';
+  
+  // Assembler les éléments
+  lyricsToggle.appendChild(lyricsCheckbox);
+  lyricsToggle.appendChild(lyricsLabel);
+  
+  // Insérer après le loop toggle existant
+  const soundToggle = document.querySelector('.loop-toggle:nth-child(2)');
+  if (soundToggle) {
+    soundToggle.parentNode.insertBefore(lyricsToggle, soundToggle.nextSibling);
+  } else {
+    const loopToggle = document.querySelector('.loop-toggle');
+    loopToggle.parentNode.insertBefore(lyricsToggle, loopToggle.nextSibling);
+  }
+  
+  // Ajouter l'écouteur d'événement
+  lyricsCheckbox.addEventListener('change', () => {
+    lyricsEnabled = lyricsCheckbox.checked;
+  });
+}
+
 // Initialize
 function init() {
   console.log("Initializing application...");
@@ -442,6 +563,9 @@ function init() {
   loopCheckbox.addEventListener('change', () => {
     loopEnabled = loopCheckbox.checked;
   });
+  
+  // Ajouter le toggle pour les paroles
+  addLyricsToggle();
   
   // Initialize audio if available
   if (typeof initAudioInterface === 'function') {
