@@ -154,3 +154,43 @@ p.description {
   font-size: 14px;
   color: #666;
 }
+
+/* Styles spécifiques pour les paroles */
+.lyrics-toggle {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #E67E22;
+}
+
+.lyrics-toggle input {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Style pour le bouton de test audio */
+.test-audio-btn {
+  background-color: #9b59b6;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: auto;
+  align-self: center;
+}
+
+.test-audio-btn:hover {
+  background-color: #8e44ad;
+}
+
+/* Style pour le message d'avertissement audio */
+.audio-warning {
+  background-color: #ffe6e6;
+  color: #990000;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+}
