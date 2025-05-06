@@ -97,6 +97,20 @@ const songsData = {
       // Din, dan, don
       [5, 20, 0.5, "right"], [3, 20.5, 0.5, "right"], [5, 21, 0.5, "right"], [4, 21.5, 0.5, "right"], 
       [3, 22, 1, "right"], [1, 23, 1, "right"]
+      
+      // Ajout des doigtés de la main gauche
+      // Premier vers - Frère Jacques
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [5, 2, 1, "left"], [1, 3, 1, "left"],
+      // Deuxième vers - Dormez-vous?
+      [5, 4, 1, "left"], [1, 5, 1, "left"], [5, 6, 1, "left"], [1, 7, 1, "left"],
+      // Troisième vers - Sonnez les matines
+      [5, 8, 1, "left"], [1, 9, 1, "left"], [5, 10, 1, "left"], [1, 11, 1, "left"],
+      // Quatrième vers - Sonnez les matines (répétition)
+      [5, 12, 1, "left"], [1, 13, 1, "left"], [5, 14, 1, "left"], [1, 15, 1, "left"],
+      // Cinquième vers - Din, dan, don
+      [5, 16, 1, "left"], [1, 17, 1, "left"], [5, 18, 1, "left"], [1, 19, 1, "left"],
+      // Sixième vers - Din, dan, don (répétition)
+      [5, 20, 1, "left"], [1, 21, 1, "left"], [5, 22, 1, "left"], [1, 23, 1, "left"]
     ]
   },
   
