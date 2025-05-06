@@ -51,7 +51,10 @@ const songsData = {
       [1, 12.5, 1, "right"], [3, 13.5, 1, "right"], [2, 14.5, 1, "right"], [1, 15.5, 1, "right"]
     ]
   },
-  
+// Modification pour ajouter les doigtés de la main gauche à Frère Jacques
+// Cette modification doit être ajoutée au fichier songs.js
+
+// Remplacer l'objet Frère Jacques existant par celui-ci :
   "frere_jacques": {
     displayName: "Frère Jacques",
     notes: [
@@ -66,7 +69,13 @@ const songsData = {
       // Din, dan, don
       ["G4", 16, 0.5], ["A4", 16.5, 0.5], ["G4", 17, 0.5], ["F4", 17.5, 0.5], ["E4", 18, 1], ["C4", 19, 1],
       // Din, dan, don
-      ["G4", 20, 0.5], ["A4", 20.5, 0.5], ["G4", 21, 0.5], ["F4", 21.5, 0.5], ["E4", 22, 1], ["C4", 23, 1]
+      ["G4", 20, 0.5], ["A4", 20.5, 0.5], ["G4", 21, 0.5], ["F4", 21.5, 0.5], ["E4", 22, 1], ["C4", 23, 1],
+      
+      // Notes de la main gauche (basse)
+      ["C3", 0, 1], ["C3", 4, 1], ["C3", 8, 1], ["C3", 12, 1], ["C3", 16, 1], ["C3", 20, 1],
+      ["G2", 1, 1], ["G2", 5, 1], ["G2", 9, 1], ["G2", 13, 1], ["G2", 17, 1], ["G2", 21, 1], 
+      ["C3", 2, 1], ["C3", 6, 1], ["C3", 10, 1], ["C3", 14, 1], ["C3", 18, 1], ["C3", 22, 1],
+      ["G2", 3, 1], ["G2", 7, 1], ["G2", 11, 1], ["G2", 15, 1], ["G2", 19, 1], ["G2", 23, 1]
     ],
     lyrics: [
       // Frère Jacques
@@ -83,7 +92,8 @@ const songsData = {
       ["Din", 20, 0.5], ["dan", 20.5, 0.5], ["din", 21, 0.5], ["don", 21.5, 0.5], ["din", 22, 1], ["don", 23, 1]
     ],
     fingerings: [
-      // Frère Jacques - main droite
+      // Main droite
+      // Frère Jacques
       [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"],
       // Dormez-vous?
       [1, 4, 1, "right"], [2, 5, 1, "right"], [3, 6, 1, "right"], [1, 7, 1, "right"],
@@ -96,7 +106,7 @@ const songsData = {
       [3, 18, 1, "right"], [1, 19, 1, "right"],
       // Din, dan, don
       [5, 20, 0.5, "right"], [3, 20.5, 0.5, "right"], [5, 21, 0.5, "right"], [4, 21.5, 0.5, "right"], 
-      [3, 22, 1, "right"], [1, 23, 1, "right"]
+      [3, 22, 1, "right"], [1, 23, 1, "right"],
       
       // Ajout des doigtés de la main gauche
       // Premier vers - Frère Jacques
