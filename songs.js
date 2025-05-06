@@ -37,6 +37,18 @@ const songsData = {
       // Descendante
       ["Do", 8.5, 1], ["Si", 9.5, 1], ["La", 10.5, 1], ["Sol", 11.5, 1],
       ["Fa", 12.5, 1], ["Mi", 13.5, 1], ["Ré", 14.5, 1], ["Do", 15.5, 1]
+    ],
+    // Doigtés standards pour gamme de Do majeur - main droite
+    // Format: [numéro de doigt, temps de début, durée, main ('right' par défaut)]
+    fingerings: [
+      // Montante - main droite
+      [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"],
+      [2, 4, 1, "right"], [3, 5, 1, "right"], [4, 6, 1, "right"], [5, 7, 1, "right"],
+      // Pause
+      [5, 8, 0.5, "right"],
+      // Descendante - main droite
+      [5, 8.5, 1, "right"], [4, 9.5, 1, "right"], [3, 10.5, 1, "right"], [2, 11.5, 1, "right"],
+      [1, 12.5, 1, "right"], [3, 13.5, 1, "right"], [2, 14.5, 1, "right"], [1, 15.5, 1, "right"]
     ]
   },
   
@@ -69,6 +81,22 @@ const songsData = {
       ["Din", 16, 0.5], ["dan", 16.5, 0.5], ["din", 17, 0.5], ["don", 17.5, 0.5], ["din", 18, 1], ["don", 19, 1],
       // Din, dan, don
       ["Din", 20, 0.5], ["dan", 20.5, 0.5], ["din", 21, 0.5], ["don", 21.5, 0.5], ["din", 22, 1], ["don", 23, 1]
+    ],
+    fingerings: [
+      // Frère Jacques - main droite
+      [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"],
+      // Dormez-vous?
+      [1, 4, 1, "right"], [2, 5, 1, "right"], [3, 6, 1, "right"], [1, 7, 1, "right"],
+      // Sonnez les matines
+      [3, 8, 1, "right"], [4, 9, 1, "right"], [5, 10, 2, "right"],
+      // Sonnez les matines
+      [3, 12, 1, "right"], [4, 13, 1, "right"], [5, 14, 2, "right"],
+      // Din, dan, don
+      [5, 16, 0.5, "right"], [3, 16.5, 0.5, "right"], [5, 17, 0.5, "right"], [4, 17.5, 0.5, "right"], 
+      [3, 18, 1, "right"], [1, 19, 1, "right"],
+      // Din, dan, don
+      [5, 20, 0.5, "right"], [3, 20.5, 0.5, "right"], [5, 21, 0.5, "right"], [4, 21.5, 0.5, "right"], 
+      [3, 22, 1, "right"], [1, 23, 1, "right"]
     ]
   },
   
@@ -93,6 +121,20 @@ const songsData = {
       ["Prê", 16, 1], ["te", 17, 1], ["moi", 18, 1], ["ta", 19, 1], ["plu", 20, 1], ["me", 21, 1], ["", 22, 2],
       // Pour écrire un mot
       ["Pour", 24, 1], ["é", 25, 1], ["crire", 26, 1], ["un", 27, 1], ["mot", 28, 4]
+    ],
+    fingerings: [
+      // Au clair de la lune - main droite
+      [1, 0, 1, "right"], [1, 1, 1, "right"], [1, 2, 1, "right"], [2, 3, 1, "right"], 
+      [3, 4, 2, "right"], [2, 6, 2, "right"],
+      // Mon ami Pierrot
+      [1, 8, 1, "right"], [3, 9, 1, "right"], [3, 10, 1, "right"], [2, 11, 1, "right"], 
+      [1, 12, 4, "right"],
+      // Prête-moi ta plume
+      [1, 16, 1, "right"], [1, 17, 1, "right"], [1, 18, 1, "right"], [2, 19, 1, "right"], 
+      [3, 20, 2, "right"], [2, 22, 2, "right"],
+      // Pour écrire un mot
+      [1, 24, 1, "right"], [3, 25, 1, "right"], [3, 26, 1, "right"], [2, 27, 1, "right"], 
+      [1, 28, 4, "right"]
     ]
   },
   
@@ -117,6 +159,20 @@ const songsData = {
       ["J'ai", 14, 1], ["trou", 15, 1], ["vé", 16, 1], ["l'eau", 17, 1], ["si", 18, 1], ["belle", 19, 2],
       // Que je m'y suis baigné
       ["Que", 21, 1], ["je", 22, 1], ["m'y", 23, 1], ["suis", 24, 1], ["bai", 25, 1], ["gné", 26, 2]
+    ],
+    fingerings: [
+      // À la claire fontaine - main droite
+      [1, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 1, "right"], [5, 3, 1, "right"], 
+      [3, 4, 1, "right"], [5, 5, 2, "right"],
+      // M'en allant promener
+      [5, 7, 1, "right"], [4, 8, 1, "right"], [5, 9, 1, "right"], [3, 10, 1, "right"], 
+      [2, 11, 1, "right"], [1, 12, 2, "right"],
+      // J'ai trouvé l'eau si belle
+      [1, 14, 1, "right"], [3, 15, 1, "right"], [5, 16, 1, "right"], [5, 17, 1, "right"], 
+      [3, 18, 1, "right"], [5, 19, 2, "right"],
+      // Que je m'y suis baigné
+      [5, 21, 1, "right"], [4, 22, 1, "right"], [5, 23, 1, "right"], [3, 24, 1, "right"], 
+      [2, 25, 1, "right"], [1, 26, 2, "right"]
     ]
   },
   
@@ -141,6 +197,20 @@ const songsData = {
       ["Sur", 14, 0.5], ["le", 14.5, 0.5], ["pont", 15, 0.5], ["d'A", 15.5, 0.5], ["vi", 16, 1], ["gnon", 17, 1],
       // L'on y danse tous en rond
       ["L'on", 18, 1], ["y", 19, 1], ["danse", 20, 1], ["en", 21, 1], ["rond", 22, 2]
+    ],
+    fingerings: [
+      // Sur le pont d'Avignon - main droite
+      [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"], 
+      [3, 4, 2, "right"],
+      // L'on y danse, l'on y danse
+      [3, 6, 1, "right"], [4, 7, 1, "right"], [5, 8, 2, "right"], [3, 10, 1, "right"], 
+      [4, 11, 1, "right"], [5, 12, 2, "right"],
+      // Sur le pont d'Avignon
+      [5, 14, 0.5, "right"], [4, 14.5, 0.5, "right"], [5, 15, 0.5, "right"], [4, 15.5, 0.5, "right"], 
+      [3, 16, 1, "right"], [1, 17, 1, "right"],
+      // L'on y danse tous en rond
+      [1, 18, 1, "right"], [5, 19, 1, "right"], [5, 20, 1, "right"], [3, 21, 1, "right"], 
+      [1, 22, 2, "right"]
     ]
   },
   
@@ -165,6 +235,17 @@ const songsData = {
       ["Do", 12, 1], ["do,", 13, 1], ["l'en", 14, 1], ["fant do", 15, 2],
       // L'enfant dormira bientôt
       ["L'en", 17, 1], ["fant", 18, 1], ["dor", 19, 1], ["mi-ra bien-tôt", 20, 3]
+    ],
+    fingerings: [
+      // Dodo, l'enfant do - main droite
+      [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 2, "right"],
+      // L'enfant dormira bien vite
+      [3, 5, 1, "right"], [4, 6, 1, "right"], [5, 7, 2, "right"], [3, 9, 1, "right"], 
+      [1, 10, 2, "right"],
+      // Dodo, l'enfant do
+      [5, 12, 1, "right"], [4, 13, 1, "right"], [3, 14, 1, "right"], [2, 15, 2, "right"],
+      // L'enfant dormira bientôt
+      [1, 17, 1, "right"], [2, 18, 1, "right"], [3, 19, 1, "right"], [1, 20, 3, "right"]
     ]
   },
   
@@ -189,6 +270,20 @@ const songsData = {
       ["Je", 8, 1], ["l'at", 9, 1], ["trape", 10, 1], ["par", 11, 1], ["la queue", 12, 1],
       // Je la montre à ces messieurs
       ["Je", 13, 1], ["la", 14, 1], ["mon", 15, 1], ["tre à", 16, 1], ["ces messieurs", 17, 1]
+    ],
+    fingerings: [
+      // Une souris verte - main droite
+      [5, 0, 1, "right"], [4, 1, 0.5, "right"], [5, 1.5, 0.5, "right"], [4, 2, 1, "right"], 
+      [5, 3, 1, "right"],
+      // Qui courait dans l'herbe 
+      [5, 4, 1, "right"], [4, 5, 0.5, "right"], [5, 5.5, 0.5, "right"], [4, 6, 1, "right"], 
+      [5, 7, 1, "right"],
+      // Je l'attrape par la queue
+      [5, 8, 1, "right"], [1, 9, 1, "right"], [2, 10, 1, "right"], [3, 11, 1, "right"], 
+      [5, 12, 1, "right"],
+      // Je la montre à ces messieurs
+      [5, 13, 1, "right"], [1, 14, 1, "right"], [2, 15, 1, "right"], [3, 16, 1, "right"], 
+      [5, 17, 1, "right"]
     ]
   },
   
@@ -213,9 +308,23 @@ const songsData = {
       ["Ma", 16, 1], ["man", 17, 1], ["est", 18, 1], ["en", 19, 1], ["haut", 20, 2],
       // Qui fait du gâteau
       ["Qui", 22, 1], ["fait", 23, 1], ["du", 24, 1], ["gâ", 25, 1], ["teau", 26, 2]
+    ],
+    fingerings: [
+      // Fais dodo - main droite
+      [5, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 1, "right"], [3, 3, 1, "right"], 
+      [5, 4, 1, "right"], [4, 5, 1, "right"], [5, 6, 2, "right"],
+      // Fais dodo, t'auras du lolo
+      [5, 8, 1, "right"], [3, 9, 1, "right"], [5, 10, 1, "right"], [3, 11, 1, "right"], 
+      [5, 12, 1, "right"], [4, 13, 1, "right"], [3, 14, 2, "right"],
+      // Maman est en haut
+      [1, 16, 1, "right"], [2, 17, 1, "right"], [3, 18, 1, "right"], [4, 19, 1, "right"], 
+      [5, 20, 2, "right"],
+      // Qui fait du gâteau
+      [5, 22, 1, "right"], [4, 23, 1, "right"], [5, 24, 1, "right"], [4, 25, 1, "right"], 
+      [3, 26, 2, "right"]
     ]
   },
-  
+    
   "alouette": {
     displayName: "Alouette, Gentille Alouette",
     notes: [
