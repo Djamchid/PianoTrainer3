@@ -17,9 +17,9 @@ const height = canvas.height;
 const keyboardStartY = 425;
 const keyboardHeight = 70;
 const playLineY = keyboardStartY; // Ligne rouge à la hauteur du haut des touches
-const whiteKeyWidth = 30;
-const blackKeyWidth = 20;
-const noteWidth = 25;      // Width for rectangular notes
+const whiteKeyWidth = 23; // Réduit pour faire tenir plus de touches
+const blackKeyWidth = 15; // Réduit pour faire tenir plus de touches
+const noteWidth = 20;      // Réduit pour faire tenir plus de notes
 const startOffsetBeats = 4; // Préparation de 4 temps avant la première note
 
 // State
@@ -53,17 +53,25 @@ function translateNote(englishNote) {
   return englishNote; // Return original if no match
 }
 
+// Function to determine if a note is for left hand
+function isLeftHandNote(englishNote) {
+  // Extraire l'octave de la note
+  const octave = parseInt(englishNote.match(/\d+/)[0]);
+  // Considérer les notes d'octave 3 et moins comme appartenant à la main gauche
+  return octave <= 3;
+}
+
 // Setup piano keyboard
 function setupPianoKeys() {
   pianoKeys = [];
   const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   const blackNotePositions = [0, 1, 3, 4, 5]; // after C, D, F, G, A
   
-  // Create 3 octaves of keys
-  for (let octave = 3; octave <= 5; octave++) {
+  // Create 4 octaves of keys - commencer depuis l'octave 2 au lieu de 3
+  for (let octave = 2; octave <= 5; octave++) {
     // White keys
     for (let i = 0; i < whiteNotes.length; i++) {
-      const x = ((octave - 3) * 7 + i) * whiteKeyWidth;
+      const x = ((octave - 2) * 7 + i) * whiteKeyWidth; // Ajuster le calcul de position
       pianoKeys.push({
         englishNote: `${whiteNotes[i]}${octave}`,
         note: translateNote(`${whiteNotes[i]}${octave}`),
@@ -76,7 +84,7 @@ function setupPianoKeys() {
     
     // Black keys
     for (let i = 0; i < blackNotePositions.length; i++) {
-      const whiteKeyPosition = (octave - 3) * 7 + blackNotePositions[i];
+      const whiteKeyPosition = (octave - 2) * 7 + blackNotePositions[i]; // Ajuster le calcul
       const x = whiteKeyPosition * whiteKeyWidth + (whiteKeyWidth - blackKeyWidth/2);
       const noteName = `${whiteNotes[blackNotePositions[i]]}#${octave}`;
       pianoKeys.push({
@@ -113,13 +121,10 @@ function initSongMenu() {
 
 // Convert beats to pixels
 function beatsToPixels(beats) {
-  return beats * 80; // 80 pixels per beat
+  return beats * 70; // 70 pixels per beat (reduced from 80)
 }
 
 // Modifications à apporter à piano-trainer.js pour intégrer les doigtés
-
-// 1. Modifier la fonction createNotesForSong pour intégrer les doigtés
-// Remplacer la fonction existante par celle-ci:
 
 function createNotesForSong(songKey) {
   const songData = songsData[songKey];
@@ -245,12 +250,39 @@ function drawBackground() {
   }
 }
 
-// Draw piano keyboard
+// Draw piano keyboard with color distinction between left and right hand
 function drawKeyboard() {
+  // D'abord, ajout d'une indication d'octave
+  ctx.fillStyle = "#333333";
+  ctx.font = "12px Arial";
+  ctx.textAlign = "center";
+  
+  for (let octave = 2; octave <= 5; octave++) {
+    const octaveX = ((octave - 2) * 7 + 3) * whiteKeyWidth; // Position au milieu de l'octave
+    ctx.fillText(`Oct ${octave}`, octaveX, keyboardStartY - 10);
+  }
+  
+  // Tracer une ligne de séparation entre main gauche et main droite (entre C3 et C4)
+  const separationX = (7 * 2) * whiteKeyWidth; // Position après l'octave 3 complète
+  ctx.strokeStyle = "#FF9800"; // Orange pour la séparation
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(separationX, keyboardStartY - 20);
+  ctx.lineTo(separationX, keyboardStartY + keyboardHeight + 10);
+  ctx.stroke();
+  
+  // Légère indication textuelle
+  ctx.fillStyle = "#3F51B5"; // Bleu pour la main gauche
+  ctx.fillText("Main gauche", separationX / 2, keyboardStartY + keyboardHeight + 25);
+  ctx.fillStyle = "#FF9800"; // Orange pour la main droite
+  ctx.fillText("Main droite", separationX + ((7 * 2) * whiteKeyWidth)/2, keyboardStartY + keyboardHeight + 25);
+  
   // Draw white keys first
   pianoKeys.forEach(key => {
     if (!key.isBlack) {
-      ctx.fillStyle = "#FFFFFF";
+      // Couleur de fond légèrement différente selon la main
+      const octave = parseInt(key.englishNote.match(/\d+/)[0]);
+      ctx.fillStyle = octave <= 3 ? "#F0F8FF" : "#FFFFFF"; // Bleu très clair pour main gauche
       ctx.strokeStyle = "#333333";
       ctx.lineWidth = 1;
       
@@ -309,7 +341,7 @@ function animate(timestamp) {
   drawBackground();
   drawKeyboard();
   
-  // Draw notes
+  // Draw notes with hand distinction
   notes.forEach(note => {
     // Ajouter l'offset de préparation pour le calcul de la position
     const adjustedStartBeat = note.startBeat + startOffsetBeats;
@@ -324,7 +356,11 @@ function animate(timestamp) {
       const isAtPlayLine = Math.abs(y - playLineY) < 15;
       const hasPassedPlayLine = y > playLineY;
       
-      // Set color based on status
+      // Determiner si c'est une note de main gauche ou droite si pas déjà spécifié
+      const isLeftHand = note.hand === 'left' || 
+                         (note.hand === undefined && isLeftHandNote(note.englishNote));
+      
+      // Set color based on status and hand
       if (isAtPlayLine) {
         ctx.fillStyle = "#4CAF50"; // Green at play line
         
@@ -339,7 +375,13 @@ function animate(timestamp) {
       } else if (hasPassedPlayLine) {
         ctx.fillStyle = "#AAAAAA"; // Gray after passing
       } else {
-        ctx.fillStyle = note.isBlack ? "#555555" : "#3498db"; // Dark/Blue before
+        // Couleurs différentes selon la main
+        if (isLeftHand) {
+          ctx.fillStyle = note.isBlack ? "#3949AB" : "#7986CB"; // Bleu pour main gauche
+        } else {
+          ctx.fillStyle = note.isBlack ? "#E65100" : "#F57C00"; // Orange pour main droite
+        }
+        
         // Réinitialiser l'état played quand la note revient (en cas de boucle)
         if (beatDistance > 2) {
           note.played = false;
@@ -360,7 +402,14 @@ function animate(timestamp) {
       ctx.font = "bold 12px Arial";
       ctx.textAlign = "center";
       ctx.fillText(note.note, note.x, y + 4);
-      // AJOUTER CECI:
+      
+      // Ajouter une petite indication de main si aucun doigté
+      if (!note.fingerNumber && !isAtPlayLine && !hasPassedPlayLine) {
+        const handIndicator = isLeftHand ? "G" : "D";
+        ctx.font = "italic 10px Arial";
+        ctx.fillText(handIndicator, note.x, y - noteHeight/2 - 5);
+      }
+      
       // Dessiner l'indicateur de doigté si disponible
       if (typeof window.drawFingeringIndicator === 'function') {
         window.drawFingeringIndicator(note, y, noteHeight, ctx);
@@ -540,6 +589,18 @@ function addLyricsToggle() {
   });
 }
 
+// Ajouter des explications pour les couleurs des mains dans le footer
+function addHandExplanation() {
+  const footer = document.querySelector('.footer');
+  if (footer) {
+    const handExplanation = document.createElement('p');
+    handExplanation.innerHTML = '<strong>Main gauche et droite :</strong> Les touches sont différenciées par couleur. ' +
+      'Les touches <span style="color:#3F51B5">bleues</span> sont jouées par la main gauche (octaves 2-3), ' +
+      'les touches <span style="color:#FF9800">orange</span> par la main droite (octaves 4-5).';
+    footer.appendChild(handExplanation);
+  }
+}
+
 // Initialize
 function init() {
   console.log("Initializing application...");
@@ -587,8 +648,6 @@ function init() {
   if (typeof initAudioInterface === 'function') {
     initAudioInterface();
   }
-  // 3. Modifier la fonction init() pour initialiser l'interface des doigtés
-  // À la fin de la fonction init(), ajouter:
   
   // Initialiser l'interface des doigtés si la fonction est disponible
   if (typeof window.initFingeringInterface === 'function') {
@@ -599,6 +658,9 @@ function init() {
   if (typeof window.addFingeringExplanation === 'function') {
     window.addFingeringExplanation();
   }
+  
+  // Ajouter l'explication des mains
+  addHandExplanation();
   
   console.log("Application initialized.");
 }
