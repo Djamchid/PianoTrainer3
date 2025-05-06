@@ -116,7 +116,11 @@ function beatsToPixels(beats) {
   return beats * 80; // 80 pixels per beat
 }
 
-// Create notes and lyrics for a song
+// Modifications à apporter à piano-trainer.js pour intégrer les doigtés
+
+// 1. Modifier la fonction createNotesForSong pour intégrer les doigtés
+// Remplacer la fonction existante par celle-ci:
+
 function createNotesForSong(songKey) {
   const songData = songsData[songKey];
   if (!songData) return { notes: [], lyrics: [] };
@@ -129,6 +133,7 @@ function createNotesForSong(songKey) {
     const x = key ? key.x + key.width/2 : width/2;
     const isBlack = key ? key.isBlack : false;
     
+    // Informations de base pour la note
     return {
       id: index,
       englishNote: englishNoteName,
@@ -162,16 +167,22 @@ function createNotesForSong(songKey) {
     };
   }) : [];
   
+  // Ajouter les doigtés si disponibles et si la fonction existe
+  let notesWithFingers = notesWithPositions;
+  if (typeof window.addFingeringToNotes === 'function') {
+    notesWithFingers = window.addFingeringToNotes(notesWithPositions, songData);
+  }
+  
   // Calculer la longueur totale de la chanson
-  if (notesWithPositions.length > 0) {
-    const lastNote = notesWithPositions[notesWithPositions.length - 1];
+  if (notesWithFingers.length > 0) {
+    const lastNote = notesWithFingers[notesWithFingers.length - 1];
     totalSongBeats = lastNote.startBeat + lastNote.duration;
   } else {
     totalSongBeats = 0;
   }
   
   return { 
-    notes: notesWithPositions,
+    notes: notesWithFingers,
     lyrics: lyricsWithPositions
   };
 }
@@ -349,6 +360,11 @@ function animate(timestamp) {
       ctx.font = "bold 12px Arial";
       ctx.textAlign = "center";
       ctx.fillText(note.note, note.x, y + 4);
+      // AJOUTER CECI:
+      // Dessiner l'indicateur de doigté si disponible
+      if (typeof window.drawFingeringIndicator === 'function') {
+        window.drawFingeringIndicator(note, y, noteHeight, ctx);
+      }
     }
   });
   
@@ -570,6 +586,18 @@ function init() {
   // Initialize audio if available
   if (typeof initAudioInterface === 'function') {
     initAudioInterface();
+  }
+  // 3. Modifier la fonction init() pour initialiser l'interface des doigtés
+  // À la fin de la fonction init(), ajouter:
+  
+  // Initialiser l'interface des doigtés si la fonction est disponible
+  if (typeof window.initFingeringInterface === 'function') {
+    window.initFingeringInterface();
+  }
+  
+  // Ajouter l'explication des doigtés dans le footer
+  if (typeof window.addFingeringExplanation === 'function') {
+    window.addFingeringExplanation();
   }
   
   console.log("Application initialized.");
