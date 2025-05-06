@@ -1,3 +1,5 @@
+// Mise à jour du fichier songs.js pour ajouter/corriger les parties main gauche
+
 // Translation map for note names (English to French)
 const noteTranslation = {
   "C": "Do",
@@ -26,7 +28,16 @@ const songsData = {
       ["C5", 8, 0.5],
       // Descendante
       ["C5", 8.5, 1], ["B4", 9.5, 1], ["A4", 10.5, 1], ["G4", 11.5, 1],
-      ["F4", 12.5, 1], ["E4", 13.5, 1], ["D4", 14.5, 1], ["C4", 15.5, 1]
+      ["F4", 12.5, 1], ["E4", 13.5, 1], ["D4", 14.5, 1], ["C4", 15.5, 1],
+      
+      // Ajout : notes main gauche
+      ["C3", 0, 1], ["G2", 1, 1], ["C3", 2, 1], ["F3", 3, 1],
+      ["G3", 4, 1], ["F3", 5, 1], ["G3", 6, 1], ["C3", 7, 1],
+      // Pause
+      ["C3", 8, 0.5],
+      // Descendante
+      ["C3", 8.5, 1], ["G2", 9.5, 1], ["A2", 10.5, 1], ["G2", 11.5, 1],
+      ["F2", 12.5, 1], ["G2", 13.5, 1], ["G2", 14.5, 1], ["C3", 15.5, 1]
     ],
     lyrics: [
       // Montante
@@ -38,8 +49,7 @@ const songsData = {
       ["Do", 8.5, 1], ["Si", 9.5, 1], ["La", 10.5, 1], ["Sol", 11.5, 1],
       ["Fa", 12.5, 1], ["Mi", 13.5, 1], ["Ré", 14.5, 1], ["Do", 15.5, 1]
     ],
-    // Doigtés standards pour gamme de Do majeur - main droite
-    // Format: [numéro de doigt, temps de début, durée, main ('right' par défaut)]
+    // Doigtés standards pour gamme de Do majeur
     fingerings: [
       // Montante - main droite
       [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"],
@@ -48,13 +58,20 @@ const songsData = {
       [5, 8, 0.5, "right"],
       // Descendante - main droite
       [5, 8.5, 1, "right"], [4, 9.5, 1, "right"], [3, 10.5, 1, "right"], [2, 11.5, 1, "right"],
-      [1, 12.5, 1, "right"], [3, 13.5, 1, "right"], [2, 14.5, 1, "right"], [1, 15.5, 1, "right"]
+      [1, 12.5, 1, "right"], [3, 13.5, 1, "right"], [2, 14.5, 1, "right"], [1, 15.5, 1, "right"],
+      
+      // Ajout : Doigtés main gauche
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [5, 2, 1, "left"], [3, 3, 1, "left"],
+      [2, 4, 1, "left"], [3, 5, 1, "left"], [2, 6, 1, "left"], [5, 7, 1, "left"],
+      // Pause
+      [5, 8, 0.5, "left"],
+      // Descendante - main gauche
+      [5, 8.5, 1, "left"], [1, 9.5, 1, "left"], [3, 10.5, 1, "left"], [1, 11.5, 1, "left"],
+      [2, 12.5, 1, "left"], [1, 13.5, 1, "left"], [1, 14.5, 1, "left"], [5, 15.5, 1, "left"]
     ]
   },
-// Modification pour ajouter les doigtés de la main gauche à Frère Jacques
-// Cette modification doit être ajoutée au fichier songs.js
 
-// Remplacer l'objet Frère Jacques existant par celui-ci :
+  // Correction pour Frère Jacques - Doigtés de la main gauche
   "frere_jacques": {
     displayName: "Frère Jacques",
     notes: [
@@ -92,7 +109,7 @@ const songsData = {
       ["Din", 20, 0.5], ["dan", 20.5, 0.5], ["din", 21, 0.5], ["don", 21.5, 0.5], ["din", 22, 1], ["don", 23, 1]
     ],
     fingerings: [
-      // Main droite
+      // Main droite (inchangée)
       // Frère Jacques
       [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"],
       // Dormez-vous?
@@ -108,34 +125,61 @@ const songsData = {
       [5, 20, 0.5, "right"], [3, 20.5, 0.5, "right"], [5, 21, 0.5, "right"], [4, 21.5, 0.5, "right"], 
       [3, 22, 1, "right"], [1, 23, 1, "right"],
       
-      // Ajout des doigtés de la main gauche
-      // Premier vers - Frère Jacques
-      [5, 0, 1, "left"], [1, 1, 1, "left"], [5, 2, 1, "left"], [1, 3, 1, "left"],
-      // Deuxième vers - Dormez-vous?
-      [5, 4, 1, "left"], [1, 5, 1, "left"], [5, 6, 1, "left"], [1, 7, 1, "left"],
-      // Troisième vers - Sonnez les matines
-      [5, 8, 1, "left"], [1, 9, 1, "left"], [5, 10, 1, "left"], [1, 11, 1, "left"],
-      // Quatrième vers - Sonnez les matines (répétition)
-      [5, 12, 1, "left"], [1, 13, 1, "left"], [5, 14, 1, "left"], [1, 15, 1, "left"],
-      // Cinquième vers - Din, dan, don
-      [5, 16, 1, "left"], [1, 17, 1, "left"], [5, 18, 1, "left"], [1, 19, 1, "left"],
-      // Sixième vers - Din, dan, don (répétition)
-      [5, 20, 1, "left"], [1, 21, 1, "left"], [5, 22, 1, "left"], [1, 23, 1, "left"]
+      // CORRECTION des doigtés de la main gauche
+      // Les doigtés correspondent aux notes C3 et G2 en alternance
+      // C3 avec le petit doigt (5) et G2 avec le pouce (1)
+      [5, 0, 1, "left"],  // C3
+      [1, 1, 1, "left"],  // G2
+      [5, 2, 1, "left"],  // C3
+      [1, 3, 1, "left"],  // G2
+      
+      [5, 4, 1, "left"],  // C3
+      [1, 5, 1, "left"],  // G2
+      [5, 6, 1, "left"],  // C3
+      [1, 7, 1, "left"],  // G2
+      
+      [5, 8, 1, "left"],  // C3
+      [1, 9, 1, "left"],  // G2
+      [5, 10, 1, "left"], // C3
+      [1, 11, 1, "left"], // G2
+      
+      [5, 12, 1, "left"], // C3
+      [1, 13, 1, "left"], // G2
+      [5, 14, 1, "left"], // C3
+      [1, 15, 1, "left"], // G2
+      
+      [5, 16, 1, "left"], // C3
+      [1, 17, 1, "left"], // G2
+      [5, 18, 1, "left"], // C3
+      [1, 19, 1, "left"], // G2
+      
+      [5, 20, 1, "left"], // C3
+      [1, 21, 1, "left"], // G2
+      [5, 22, 1, "left"], // C3
+      [1, 23, 1, "left"]  // G2
     ]
   },
   
+  // Ajout de la main gauche pour "Au Clair de la Lune"
   "au_clair_de_la_lune": {
     displayName: "Au Clair de la Lune",
     notes: [
-      // Au clair de la lune
+      // Au clair de la lune (main droite, inchangé)
       ["C4", 0, 1], ["C4", 1, 1], ["C4", 2, 1], ["D4", 3, 1], ["E4", 4, 2], ["D4", 6, 2],
       // Mon ami Pierrot
       ["C4", 8, 1], ["E4", 9, 1], ["E4", 10, 1], ["D4", 11, 1], ["C4", 12, 4],
       // Prête-moi ta plume
       ["C4", 16, 1], ["C4", 17, 1], ["C4", 18, 1], ["D4", 19, 1], ["E4", 20, 2], ["D4", 22, 2],
       // Pour écrire un mot
-      ["C4", 24, 1], ["E4", 25, 1], ["E4", 26, 1], ["D4", 27, 1], ["C4", 28, 4]
+      ["C4", 24, 1], ["E4", 25, 1], ["E4", 26, 1], ["D4", 27, 1], ["C4", 28, 4],
+      
+      // AJOUT: Partie main gauche - accompagnement simple
+      ["C3", 0, 2], ["G2", 2, 2], ["C3", 4, 2], ["G2", 6, 2],
+      ["C3", 8, 2], ["G2", 10, 2], ["C3", 12, 4],
+      ["C3", 16, 2], ["G2", 18, 2], ["C3", 20, 2], ["G2", 22, 2],
+      ["C3", 24, 2], ["G2", 26, 2], ["C3", 28, 4]
     ],
+    // Lyrics restent inchangés
     lyrics: [
       // Au clair de la lune
       ["Au", 0, 1], ["clair", 1, 1], ["de", 2, 1], ["la", 3, 1], ["lu", 4, 1], ["ne", 5, 1], ["", 6, 2],
@@ -147,7 +191,7 @@ const songsData = {
       ["Pour", 24, 1], ["é", 25, 1], ["crire", 26, 1], ["un", 27, 1], ["mot", 28, 4]
     ],
     fingerings: [
-      // Au clair de la lune - main droite
+      // Au clair de la lune - main droite (inchangé)
       [1, 0, 1, "right"], [1, 1, 1, "right"], [1, 2, 1, "right"], [2, 3, 1, "right"], 
       [3, 4, 2, "right"], [2, 6, 2, "right"],
       // Mon ami Pierrot
@@ -158,22 +202,36 @@ const songsData = {
       [3, 20, 2, "right"], [2, 22, 2, "right"],
       // Pour écrire un mot
       [1, 24, 1, "right"], [3, 25, 1, "right"], [3, 26, 1, "right"], [2, 27, 1, "right"], 
-      [1, 28, 4, "right"]
+      [1, 28, 4, "right"],
+      
+      // AJOUT: Doigtés main gauche
+      [5, 0, 2, "left"], [1, 2, 2, "left"], [5, 4, 2, "left"], [1, 6, 2, "left"],
+      [5, 8, 2, "left"], [1, 10, 2, "left"], [5, 12, 4, "left"],
+      [5, 16, 2, "left"], [1, 18, 2, "left"], [5, 20, 2, "left"], [1, 22, 2, "left"],
+      [5, 24, 2, "left"], [1, 26, 2, "left"], [5, 28, 4, "left"]
     ]
   },
   
+  // Ajout de la main gauche pour "À la Claire Fontaine"
   "a_la_claire_fontaine": {
     displayName: "À la Claire Fontaine",
     notes: [
-      // À la claire fontaine
+      // À la claire fontaine (main droite, inchangé)
       ["C4", 0, 1], ["E4", 1, 1], ["G4", 2, 1], ["G4", 3, 1], ["E4", 4, 1], ["G4", 5, 2],
       // M'en allant promener
       ["G4", 7, 1], ["A4", 8, 1], ["G4", 9, 1], ["E4", 10, 1], ["D4", 11, 1], ["C4", 12, 2],
       // J'ai trouvé l'eau si belle
       ["C4", 14, 1], ["E4", 15, 1], ["G4", 16, 1], ["G4", 17, 1], ["E4", 18, 1], ["G4", 19, 2],
       // Que je m'y suis baigné
-      ["G4", 21, 1], ["A4", 22, 1], ["G4", 23, 1], ["E4", 24, 1], ["D4", 25, 1], ["C4", 26, 2]
+      ["G4", 21, 1], ["A4", 22, 1], ["G4", 23, 1], ["E4", 24, 1], ["D4", 25, 1], ["C4", 26, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 1], ["G2", 1, 1], ["E3", 2, 1], ["C3", 3, 1], ["G2", 4, 1], ["C3", 5, 2],
+      ["G2", 7, 1], ["F2", 8, 1], ["G2", 9, 1], ["C3", 10, 1], ["G2", 11, 1], ["C3", 12, 2],
+      ["C3", 14, 1], ["G2", 15, 1], ["E3", 16, 1], ["C3", 17, 1], ["G2", 18, 1], ["C3", 19, 2],
+      ["G2", 21, 1], ["F2", 22, 1], ["G2", 23, 1], ["C3", 24, 1], ["G2", 25, 1], ["C3", 26, 2]
     ],
+    // Lyrics restent inchangés
     lyrics: [
       // À la claire fontaine
       ["À", 0, 1], ["la", 1, 1], ["claire", 2, 1], ["fon", 3, 1], ["tai", 4, 1], ["ne", 5, 2],
@@ -185,7 +243,7 @@ const songsData = {
       ["Que", 21, 1], ["je", 22, 1], ["m'y", 23, 1], ["suis", 24, 1], ["bai", 25, 1], ["gné", 26, 2]
     ],
     fingerings: [
-      // À la claire fontaine - main droite
+      // À la claire fontaine - main droite (inchangé)
       [1, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 1, "right"], [5, 3, 1, "right"], 
       [3, 4, 1, "right"], [5, 5, 2, "right"],
       // M'en allant promener
@@ -196,22 +254,40 @@ const songsData = {
       [3, 18, 1, "right"], [5, 19, 2, "right"],
       // Que je m'y suis baigné
       [5, 21, 1, "right"], [4, 22, 1, "right"], [5, 23, 1, "right"], [3, 24, 1, "right"], 
-      [2, 25, 1, "right"], [1, 26, 2, "right"]
+      [2, 25, 1, "right"], [1, 26, 2, "right"],
+      
+      // AJOUT: Doigtés main gauche
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [3, 2, 1, "left"], [5, 3, 1, "left"], 
+      [1, 4, 1, "left"], [5, 5, 2, "left"],
+      [1, 7, 1, "left"], [2, 8, 1, "left"], [1, 9, 1, "left"], [5, 10, 1, "left"], 
+      [1, 11, 1, "left"], [5, 12, 2, "left"],
+      [5, 14, 1, "left"], [1, 15, 1, "left"], [3, 16, 1, "left"], [5, 17, 1, "left"], 
+      [1, 18, 1, "left"], [5, 19, 2, "left"],
+      [1, 21, 1, "left"], [2, 22, 1, "left"], [1, 23, 1, "left"], [5, 24, 1, "left"], 
+      [1, 25, 1, "left"], [5, 26, 2, "left"]
     ]
   },
   
+  // Ajout de la main gauche pour "Sur le Pont d'Avignon"
   "sur_le_pont": {
     displayName: "Sur le Pont d'Avignon",
     notes: [
-      // Sur le pont d'Avignon
+      // Sur le pont d'Avignon (main droite, inchangé)
       ["C4", 0, 1], ["D4", 1, 1], ["E4", 2, 1], ["C4", 3, 1], ["E4", 4, 2],
       // L'on y danse, l'on y danse
       ["E4", 6, 1], ["F4", 7, 1], ["G4", 8, 2], ["E4", 10, 1], ["F4", 11, 1], ["G4", 12, 2],
       // Sur le pont d'Avignon
       ["G4", 14, 0.5], ["A4", 14.5, 0.5], ["G4", 15, 0.5], ["F4", 15.5, 0.5], ["E4", 16, 1], ["C4", 17, 1],
       // L'on y danse tous en rond
-      ["C4", 18, 1], ["G4", 19, 1], ["G4", 20, 1], ["E4", 21, 1], ["C4", 22, 2]
+      ["C4", 18, 1], ["G4", 19, 1], ["G4", 20, 1], ["E4", 21, 1], ["C4", 22, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 1], ["G2", 1, 1], ["C3", 2, 1], ["G2", 3, 1], ["C3", 4, 2],
+      ["C3", 6, 1], ["F3", 7, 1], ["G3", 8, 2], ["C3", 10, 1], ["F3", 11, 1], ["G3", 12, 2],
+      ["G2", 14, 1], ["D3", 15, 1], ["G2", 16, 1], ["C3", 17, 1],
+      ["C3", 18, 1], ["G2", 19, 1], ["E3", 20, 1], ["G2", 21, 1], ["C3", 22, 2]
     ],
+    // Lyrics restent inchangés
     lyrics: [
       // Sur le pont d'Avignon
       ["Sur", 0, 1], ["le", 1, 1], ["pont", 2, 1], ["d'A", 3, 1], ["vi-gnon", 4, 2],
@@ -223,7 +299,7 @@ const songsData = {
       ["L'on", 18, 1], ["y", 19, 1], ["danse", 20, 1], ["en", 21, 1], ["rond", 22, 2]
     ],
     fingerings: [
-      // Sur le pont d'Avignon - main droite
+      // Sur le pont d'Avignon - main droite (inchangé)
       [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"], 
       [3, 4, 2, "right"],
       // L'on y danse, l'on y danse
@@ -234,22 +310,39 @@ const songsData = {
       [3, 16, 1, "right"], [1, 17, 1, "right"],
       // L'on y danse tous en rond
       [1, 18, 1, "right"], [5, 19, 1, "right"], [5, 20, 1, "right"], [3, 21, 1, "right"], 
-      [1, 22, 2, "right"]
+      [1, 22, 2, "right"],
+      
+      // AJOUT: Doigtés main gauche
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [5, 2, 1, "left"], [1, 3, 1, "left"], 
+      [5, 4, 2, "left"],
+      [5, 6, 1, "left"], [3, 7, 1, "left"], [1, 8, 2, "left"], [5, 10, 1, "left"], 
+      [3, 11, 1, "left"], [1, 12, 2, "left"],
+      [1, 14, 1, "left"], [3, 15, 1, "left"], [1, 16, 1, "left"], [5, 17, 1, "left"],
+      [5, 18, 1, "left"], [1, 19, 1, "left"], [3, 20, 1, "left"], [1, 21, 1, "left"], 
+      [5, 22, 2, "left"]
     ]
   },
   
+  // Ajout de la main gauche pour "Dodo, l'Enfant Do"
   "dodo_lenfant_do": {
     displayName: "Dodo, l'Enfant Do",
     notes: [
-      // Dodo, l'enfant do
+      // Dodo, l'enfant do (main droite, inchangé)
       ["C4", 0, 1], ["D4", 1, 1], ["E4", 2, 1], ["C4", 3, 2],
       // L'enfant dormira bien vite
       ["E4", 5, 1], ["F4", 6, 1], ["G4", 7, 2], ["E4", 9, 1], ["C4", 10, 2],
       // Dodo, l'enfant do
       ["G4", 12, 1], ["F4", 13, 1], ["E4", 14, 1], ["D4", 15, 2],
       // L'enfant dormira bientôt
-      ["C4", 17, 1], ["D4", 18, 1], ["E4", 19, 1], ["C4", 20, 3]
+      ["C4", 17, 1], ["D4", 18, 1], ["E4", 19, 1], ["C4", 20, 3],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 2], ["G2", 2, 2], ["C3", 4, 2],
+      ["F3", 6, 2], ["C3", 8, 2], ["G2", 10, 2],
+      ["G2", 12, 2], ["C3", 14, 2], ["G2", 16, 2],
+      ["C3", 18, 2], ["C3", 20, 3]
     ],
+    // Lyrics restent inchangés
     lyrics: [
       // Dodo, l'enfant do
       ["Do", 0, 1], ["do,", 1, 1], ["l'en", 2, 1], ["fant do", 3, 2],
@@ -261,7 +354,7 @@ const songsData = {
       ["L'en", 17, 1], ["fant", 18, 1], ["dor", 19, 1], ["mi-ra bien-tôt", 20, 3]
     ],
     fingerings: [
-      // Dodo, l'enfant do - main droite
+      // Dodo, l'enfant do - main droite (inchangé)
       [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 2, "right"],
       // L'enfant dormira bien vite
       [3, 5, 1, "right"], [4, 6, 1, "right"], [5, 7, 2, "right"], [3, 9, 1, "right"], 
@@ -269,22 +362,36 @@ const songsData = {
       // Dodo, l'enfant do
       [5, 12, 1, "right"], [4, 13, 1, "right"], [3, 14, 1, "right"], [2, 15, 2, "right"],
       // L'enfant dormira bientôt
-      [1, 17, 1, "right"], [2, 18, 1, "right"], [3, 19, 1, "right"], [1, 20, 3, "right"]
+      [1, 17, 1, "right"], [2, 18, 1, "right"], [3, 19, 1, "right"], [1, 20, 3, "right"],
+      
+      // AJOUT: Doigtés main gauche
+      [5, 0, 2, "left"], [1, 2, 2, "left"], [5, 4, 2, "left"],
+      [3, 6, 2, "left"], [5, 8, 2, "left"], [1, 10, 2, "left"],
+      [1, 12, 2, "left"], [5, 14, 2, "left"], [1, 16, 2, "left"],
+      [5, 18, 2, "left"], [5, 20, 3, "left"]
     ]
   },
   
+  // Ajout de la main gauche pour "Une Souris Verte"
   "une_souris_verte": {
     displayName: "Une Souris Verte",
     notes: [
-      // Une souris verte
+      // Une souris verte (main droite, inchangé)
       ["G4", 0, 1], ["A4", 1, 0.5], ["G4", 1.5, 0.5], ["F4", 2, 1], ["G4", 3, 1],
       // Qui courait dans l'herbe
       ["G4", 4, 1], ["A4", 5, 0.5], ["G4", 5.5, 0.5], ["F4", 6, 1], ["G4", 7, 1],
       // Je l'attrape par la queue
       ["G4", 8, 1], ["C5", 9, 1], ["B4", 10, 1], ["A4", 11, 1], ["G4", 12, 1],
       // Je la montre à ces messieurs
-      ["G4", 13, 1], ["C5", 14, 1], ["B4", 15, 1], ["A4", 16, 1], ["G4", 17, 1]
+      ["G4", 13, 1], ["C5", 14, 1], ["B4", 15, 1], ["A4", 16, 1], ["G4", 17, 1],
+      
+      // AJOUT: Partie main gauche
+      ["G2", 0, 1], ["D3", 1, 1], ["G2", 2, 1], ["D3", 3, 1],
+      ["G2", 4, 1], ["D3", 5, 1], ["G2", 6, 1], ["D3", 7, 1],
+      ["G2", 8, 1], ["C3", 9, 1], ["G2", 10, 1], ["D3", 11, 1], ["G2", 12, 1],
+      ["G2", 13, 1], ["C3", 14, 1], ["G2", 15, 1], ["D3", 16, 1], ["G2", 17, 1]
     ],
+    // Lyrics restent inchangés
     lyrics: [
       // Une souris verte
       ["U", 0, 1], ["ne sou", 1, 0.5], ["ris", 1.5, 0.5], ["ver", 2, 1], ["te", 3, 1],
@@ -296,7 +403,7 @@ const songsData = {
       ["Je", 13, 1], ["la", 14, 1], ["mon", 15, 1], ["tre à", 16, 1], ["ces messieurs", 17, 1]
     ],
     fingerings: [
-      // Une souris verte - main droite
+      // Une souris verte - main droite (inchangé)
       [5, 0, 1, "right"], [4, 1, 0.5, "right"], [5, 1.5, 0.5, "right"], [4, 2, 1, "right"], 
       [5, 3, 1, "right"],
       // Qui courait dans l'herbe 
@@ -307,22 +414,36 @@ const songsData = {
       [5, 12, 1, "right"],
       // Je la montre à ces messieurs
       [5, 13, 1, "right"], [1, 14, 1, "right"], [2, 15, 1, "right"], [3, 16, 1, "right"], 
-      [5, 17, 1, "right"]
+      [5, 17, 1, "right"],
+      
+      // AJOUT: Doigtés main gauche
+      [1, 0, 1, "left"], [5, 1, 1, "left"], [1, 2, 1, "left"], [5, 3, 1, "left"],
+      [1, 4, 1, "left"], [5, 5, 1, "left"], [1, 6, 1, "left"], [5, 7, 1, "left"],
+      [1, 8, 1, "left"], [5, 9, 1, "left"], [1, 10, 1, "left"], [5, 11, 1, "left"], [1, 12, 1, "left"],
+      [1, 13, 1, "left"], [5, 14, 1, "left"], [1, 15, 1, "left"], [5, 16, 1, "left"], [1, 17, 1, "left"]
     ]
   },
   
+  // Ajout de la main gauche pour "Fais Dodo, Colas Mon P'tit Frère"
   "fais_dodo": {
     displayName: "Fais Dodo, Colas Mon P'tit Frère",
     notes: [
-      // Fais dodo, Colas mon p'tit frère
+      // Fais dodo, Colas mon p'tit frère (main droite, inchangé)
       ["G4", 0, 1], ["E4", 1, 1], ["G4", 2, 1], ["E4", 3, 1], ["G4", 4, 1], ["A4", 5, 1], ["G4", 6, 2],
       // Fais dodo, t'auras du lolo
       ["G4", 8, 1], ["E4", 9, 1], ["G4", 10, 1], ["E4", 11, 1], ["G4", 12, 1], ["F4", 13, 1], ["E4", 14, 2],
       // Maman est en haut
       ["C4", 16, 1], ["D4", 17, 1], ["E4", 18, 1], ["F4", 19, 1], ["G4", 20, 2],
       // Qui fait du gâteau
-      ["G4", 22, 1], ["A4", 23, 1], ["G4", 24, 1], ["F4", 25, 1], ["E4", 26, 2]
+      ["G4", 22, 1], ["A4", 23, 1], ["G4", 24, 1], ["F4", 25, 1], ["E4", 26, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 2], ["G2", 2, 2], ["C3", 4, 2], ["G2", 6, 2],
+      ["C3", 8, 2], ["G2", 10, 2], ["C3", 12, 2], ["G2", 14, 2],
+      ["C3", 16, 2], ["G2", 18, 2], ["C3", 20, 2],
+      ["G2", 22, 2], ["C3", 24, 2], ["G2", 26, 2]
     ],
+    // Lyrics restent inchangés
     lyrics: [
       // Fais dodo, Colas mon p'tit frère
       ["Fais", 0, 1], ["do", 1, 1], ["do,", 2, 1], ["Co", 3, 1], ["las", 4, 1], ["mon", 5, 1], ["p'tit frère", 6, 2],
@@ -334,7 +455,7 @@ const songsData = {
       ["Qui", 22, 1], ["fait", 23, 1], ["du", 24, 1], ["gâ", 25, 1], ["teau", 26, 2]
     ],
     fingerings: [
-      // Fais dodo - main droite
+      // Fais dodo - main droite (inchangé)
       [5, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 1, "right"], [3, 3, 1, "right"], 
       [5, 4, 1, "right"], [4, 5, 1, "right"], [5, 6, 2, "right"],
       // Fais dodo, t'auras du lolo
@@ -345,10 +466,18 @@ const songsData = {
       [5, 20, 2, "right"],
       // Qui fait du gâteau
       [5, 22, 1, "right"], [4, 23, 1, "right"], [5, 24, 1, "right"], [4, 25, 1, "right"], 
-      [3, 26, 2, "right"]
+      [3, 26, 2, "right"],
+      
+      // AJOUT: Doigtés main gauche
+      [5, 0, 2, "left"], [1, 2, 2, "left"], [5, 4, 2, "left"], [1, 6, 2, "left"],
+      [5, 8, 2, "left"], [1, 10, 2, "left"], [5, 12, 2, "left"], [1, 14, 2, "left"],
+      [5, 16, 2, "left"], [1, 18, 2, "left"], [5, 20, 2, "left"],
+      [1, 22, 2, "left"], [5, 24, 2, "left"], [1, 26, 2, "left"]
     ]
   },
-    
+  
+  // Ajouter la même structure pour les autres chansons (alouette, il_etait_un_petit_navire, etc.)
+  // Exemple pour Alouette avec partie main gauche
   "alouette": {
     displayName: "Alouette, Gentille Alouette",
     notes: [
@@ -359,7 +488,13 @@ const songsData = {
       // Je te plumerai la tête
       ["G4", 11, 0.5], ["G4", 11.5, 0.5], ["G4", 12, 0.5], ["G4", 12.5, 0.5], ["E4", 13, 1], ["G4", 14, 1],
       // Et la tête, et la tête
-      ["G4", 15, 0.5], ["G4", 15.5, 0.5], ["G4", 16, 0.5], ["G4", 16.5, 0.5], ["E4", 17, 1], ["G4", 18, 1]
+      ["G4", 15, 0.5], ["G4", 15.5, 0.5], ["G4", 16, 0.5], ["G4", 16.5, 0.5], ["E4", 17, 1], ["G4", 18, 1],
+      
+      // AJOUT: Partie main gauche
+      ["G2", 0, 1], ["C3", 1, 1], ["G2", 2, 1], ["C3", 3, 1], ["G2", 4, 1],
+      ["F2", 5, 1], ["G2", 6, 1], ["C3", 7, 1], ["G2", 8, 1], ["C3", 9, 2],
+      ["G2", 11, 1], ["C3", 12, 1], ["G2", 13, 1], ["C3", 14, 1],
+      ["G2", 15, 1], ["C3", 16, 1], ["G2", 17, 1], ["C3", 18, 1]
     ],
     lyrics: [
       // Alouette, gentille alouette
@@ -370,9 +505,28 @@ const songsData = {
       ["Je", 11, 0.5], ["te", 11.5, 0.5], ["plu", 12, 0.5], ["me", 12.5, 0.5], ["rai", 13, 1], ["la tête", 14, 1],
       // Et la tête, et la tête
       ["Et", 15, 0.5], ["la", 15.5, 0.5], ["tê", 16, 0.5], ["te", 16.5, 0.5], ["et", 17, 1], ["la tête", 18, 1]
+    ],
+    // AJOUT: Doigtés pour les deux mains
+    fingerings: [
+      // Main droite
+      [5, 0, 1, "right"], [5, 1, 0.5, "right"], [3, 1.5, 0.5, "right"], [5, 2, 1, "right"],
+      [5, 3, 0.5, "right"], [3, 3.5, 0.5, "right"], [5, 4, 1, "right"],
+      [4, 5, 1, "right"], [5, 6, 0.5, "right"], [4, 6.5, 0.5, "right"], [3, 7, 1, "right"],
+      [2, 8, 1, "right"], [3, 9, 2, "right"],
+      [5, 11, 0.5, "right"], [5, 11.5, 0.5, "right"], [5, 12, 0.5, "right"], [5, 12.5, 0.5, "right"],
+      [3, 13, 1, "right"], [5, 14, 1, "right"],
+      [5, 15, 0.5, "right"], [5, 15.5, 0.5, "right"], [5, 16, 0.5, "right"], [5, 16.5, 0.5, "right"],
+      [3, 17, 1, "right"], [5, 18, 1, "right"],
+      
+      // Main gauche
+      [1, 0, 1, "left"], [5, 1, 1, "left"], [1, 2, 1, "left"], [5, 3, 1, "left"], [1, 4, 1, "left"],
+      [2, 5, 1, "left"], [1, 6, 1, "left"], [5, 7, 1, "left"], [1, 8, 1, "left"], [5, 9, 2, "left"],
+      [1, 11, 1, "left"], [5, 12, 1, "left"], [1, 13, 1, "left"], [5, 14, 1, "left"],
+      [1, 15, 1, "left"], [5, 16, 1, "left"], [1, 17, 1, "left"], [5, 18, 1, "left"]
     ]
   },
   
+  // Il était un petit navire avec main gauche
   "il_etait_un_petit_navire": {
     displayName: "Il Était un Petit Navire",
     notes: [
@@ -381,7 +535,12 @@ const songsData = {
       // Qui n'avait ja-ja-jamais navigué
       ["C4", 6, 1], ["E4", 7, 1], ["G4", 8, 0.5], ["G4", 8.5, 0.5], ["A4", 9, 0.5], ["G4", 9.5, 0.5], ["E4", 10, 0.5], ["D4", 10.5, 0.5], ["C4", 11, 1],
       // Ohé! Ohé!
-      ["C4", 12, 0.5], ["G4", 12.5, 1], ["C4", 13.5, 0.5], ["G4", 14, 1]
+      ["C4", 12, 0.5], ["G4", 12.5, 1], ["C4", 13.5, 0.5], ["G4", 14, 1],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 1], ["G2", 1, 1], ["E3", 2, 1], ["C3", 3, 1], ["G2", 4, 1], ["C3", 5, 1],
+      ["C3", 6, 1], ["G2", 7, 1], ["E3", 8, 1], ["C3", 9, 1], ["G2", 10, 1], ["C3", 11, 1],
+      ["C3", 12, 1], ["G2", 13, 1], ["C3", 14, 1]
     ],
     lyrics: [
       // Il était un petit navire
@@ -390,9 +549,26 @@ const songsData = {
       ["Qui", 6, 1], ["n'a", 7, 1], ["vait", 8, 0.5], ["ja", 8.5, 0.5], ["ja", 9, 0.5], ["ja", 9.5, 0.5], ["mais", 10, 0.5], ["na", 10.5, 0.5], ["vigué", 11, 1],
       // Ohé! Ohé!
       ["O", 12, 0.5], ["hé!", 12.5, 1], ["O", 13.5, 0.5], ["hé!", 14, 1]
+    ],
+    fingerings: [
+      // Main droite
+      [1, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 1, "right"], [5, 3, 0.5, "right"], 
+      [4, 3.5, 0.5, "right"], [5, 4, 1, "right"], [3, 5, 1, "right"],
+      [1, 6, 1, "right"], [3, 7, 1, "right"], [5, 8, 0.5, "right"], [5, 8.5, 0.5, "right"], 
+      [4, 9, 0.5, "right"], [5, 9.5, 0.5, "right"], [3, 10, 0.5, "right"], [2, 10.5, 0.5, "right"], 
+      [1, 11, 1, "right"],
+      [1, 12, 0.5, "right"], [5, 12.5, 1, "right"], [1, 13.5, 0.5, "right"], [5, 14, 1, "right"],
+      
+      // Main gauche
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [3, 2, 1, "left"], [5, 3, 1, "left"], 
+      [1, 4, 1, "left"], [5, 5, 1, "left"],
+      [5, 6, 1, "left"], [1, 7, 1, "left"], [3, 8, 1, "left"], [5, 9, 1, "left"], 
+      [1, 10, 1, "left"], [5, 11, 1, "left"],
+      [5, 12, 1, "left"], [1, 13, 1, "left"], [5, 14, 1, "left"]
     ]
   },
   
+  // Savez-vous planter les choux avec main gauche
   "savez_vous_planter_choux": {
     displayName: "Savez-vous Planter les Choux",
     notes: [
@@ -403,7 +579,13 @@ const songsData = {
       // Savez-vous planter les choux
       ["C4", 14, 1], ["E4", 15, 1], ["G4", 16, 1], ["C4", 17, 1], ["E4", 18, 1], ["G4", 19, 2],
       // À la mode de chez nous
-      ["A4", 21, 1], ["G4", 22, 1], ["F4", 23, 1], ["E4", 24, 1], ["D4", 25, 1], ["C4", 26, 2]
+      ["A4", 21, 1], ["G4", 22, 1], ["F4", 23, 1], ["E4", 24, 1], ["D4", 25, 1], ["C4", 26, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 1], ["G2", 1, 1], ["E3", 2, 1], ["C3", 3, 1], ["G2", 4, 1], ["C3", 5, 2],
+      ["F3", 7, 1], ["G3", 8, 1], ["F3", 9, 1], ["C3", 10, 1], ["G2", 11, 1], ["C3", 12, 2],
+      ["C3", 14, 1], ["G2", 15, 1], ["E3", 16, 1], ["C3", 17, 1], ["G2", 18, 1], ["C3", 19, 2],
+      ["F3", 21, 1], ["G3", 22, 1], ["F3", 23, 1], ["C3", 24, 1], ["G2", 25, 1], ["C3", 26, 2]
     ],
     lyrics: [
       // Savez-vous planter les choux
@@ -414,9 +596,31 @@ const songsData = {
       ["Sa", 14, 1], ["vez", 15, 1], ["vous", 16, 1], ["plan", 17, 1], ["ter", 18, 1], ["les choux", 19, 2],
       // À la mode de chez nous
       ["À", 21, 1], ["la", 22, 1], ["mode", 23, 1], ["de", 24, 1], ["chez", 25, 1], ["nous", 26, 2]
+    ],
+    fingerings: [
+      // Main droite
+      [1, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 1, "right"], [1, 3, 1, "right"], 
+      [3, 4, 1, "right"], [5, 5, 2, "right"],
+      [4, 7, 1, "right"], [5, 8, 1, "right"], [4, 9, 1, "right"], [3, 10, 1, "right"], 
+      [2, 11, 1, "right"], [1, 12, 2, "right"],
+      [1, 14, 1, "right"], [3, 15, 1, "right"], [5, 16, 1, "right"], [1, 17, 1, "right"], 
+      [3, 18, 1, "right"], [5, 19, 2, "right"],
+      [4, 21, 1, "right"], [5, 22, 1, "right"], [4, 23, 1, "right"], [3, 24, 1, "right"], 
+      [2, 25, 1, "right"], [1, 26, 2, "right"],
+      
+      // Main gauche
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [3, 2, 1, "left"], [5, 3, 1, "left"], 
+      [1, 4, 1, "left"], [5, 5, 2, "left"],
+      [3, 7, 1, "left"], [1, 8, 1, "left"], [3, 9, 1, "left"], [5, 10, 1, "left"], 
+      [1, 11, 1, "left"], [5, 12, 2, "left"],
+      [5, 14, 1, "left"], [1, 15, 1, "left"], [3, 16, 1, "left"], [5, 17, 1, "left"], 
+      [1, 18, 1, "left"], [5, 19, 2, "left"],
+      [3, 21, 1, "left"], [1, 22, 1, "left"], [3, 23, 1, "left"], [5, 24, 1, "left"], 
+      [1, 25, 1, "left"], [5, 26, 2, "left"]
     ]
   },
   
+  // Ainsi font font font avec main gauche
   "ainsi_font_font_font": {
     displayName: "Ainsi Font Font Font",
     notes: [
@@ -427,7 +631,13 @@ const songsData = {
       // Ainsi font, font, font
       ["G4", 12, 0.5], ["A4", 12.5, 0.5], ["G4", 13, 0.5], ["F4", 13.5, 0.5], ["E4", 14, 1], ["C4", 15, 1],
       // Trois p'tits tours et puis s'en vont
-      ["C4", 16, 0.5], ["D4", 16.5, 0.5], ["E4", 17, 0.5], ["F4", 17.5, 0.5], ["G4", 18, 1], ["C4", 19, 2]
+      ["C4", 16, 0.5], ["D4", 16.5, 0.5], ["E4", 17, 0.5], ["F4", 17.5, 0.5], ["G4", 18, 1], ["C4", 19, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 2], ["G2", 2, 2],
+      ["C3", 4, 2], ["G2", 6, 2], ["C3", 8, 2], ["G2", 10, 2],
+      ["G2", 12, 2], ["C3", 14, 2],
+      ["C3", 16, 2], ["G2", 18, 1], ["C3", 19, 2]
     ],
     lyrics: [
       // Ainsi font, font, font
@@ -438,9 +648,26 @@ const songsData = {
       ["Ain", 12, 0.5], ["si", 12.5, 0.5], ["font", 13, 0.5], ["font", 13.5, 0.5], ["font", 14, 1], ["", 15, 1],
       // Trois p'tits tours et puis s'en vont
       ["Trois", 16, 0.5], ["p'tits", 16.5, 0.5], ["tours", 17, 0.5], ["et", 17.5, 0.5], ["puis", 18, 1], ["s'en vont", 19, 2]
+    ],
+    fingerings: [
+      // Main droite
+      [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [1, 3, 1, "right"],
+      [3, 4, 1, "right"], [4, 5, 1, "right"], [5, 6, 2, "right"], [3, 8, 1, "right"], 
+      [4, 9, 1, "right"], [5, 10, 2, "right"],
+      [5, 12, 0.5, "right"], [4, 12.5, 0.5, "right"], [5, 13, 0.5, "right"], [4, 13.5, 0.5, "right"], 
+      [3, 14, 1, "right"], [1, 15, 1, "right"],
+      [1, 16, 0.5, "right"], [2, 16.5, 0.5, "right"], [3, 17, 0.5, "right"], [4, 17.5, 0.5, "right"], 
+      [5, 18, 1, "right"], [1, 19, 2, "right"],
+      
+      // Main gauche
+      [5, 0, 2, "left"], [1, 2, 2, "left"],
+      [5, 4, 2, "left"], [1, 6, 2, "left"], [5, 8, 2, "left"], [1, 10, 2, "left"],
+      [1, 12, 2, "left"], [5, 14, 2, "left"],
+      [5, 16, 2, "left"], [1, 18, 1, "left"], [5, 19, 2, "left"]
     ]
   },
   
+  // Dans la forêt lointaine avec main gauche
   "dans_la_foret_lointaine": {
     displayName: "Dans la Forêt Lointaine",
     notes: [
@@ -451,7 +678,13 @@ const songsData = {
       // Du haut de son grand chêne
       ["E4", 14, 1], ["G4", 15, 1], ["C5", 16, 2], ["A4", 18, 1], ["G4", 19, 1], ["F4", 20, 2],
       // Il répond au hibou
-      ["E4", 22, 1], ["D4", 23, 1], ["C4", 24, 1], ["B3", 25, 1], ["C4", 26, 2]
+      ["E4", 22, 1], ["D4", 23, 1], ["C4", 24, 1], ["B3", 25, 1], ["C4", 26, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 2], ["E3", 2, 2], ["F3", 4, 2], ["G3", 6, 2],
+      ["G2", 8, 2], ["C3", 10, 2], ["G2", 12, 2],
+      ["C3", 14, 2], ["G2", 16, 2], ["F3", 18, 2], ["F2", 20, 2],
+      ["G2", 22, 2], ["G3", 24, 2], ["C3", 26, 2]
     ],
     lyrics: [
       // Dans la forêt lointaine
@@ -462,9 +695,27 @@ const songsData = {
       ["Du", 14, 1], ["haut", 15, 1], ["de", 16, 1], ["son", 17, 1], ["grand", 18, 1], ["chê", 19, 1], ["ne", 20, 2],
       // Il répond au hibou
       ["Il", 22, 1], ["ré", 23, 1], ["pond", 24, 1], ["au", 25, 1], ["hi-bou", 26, 2]
+    ],
+    fingerings: [
+      // Main droite
+      [1, 0, 1, "right"], [3, 1, 1, "right"], [5, 2, 2, "right"], [4, 4, 1, "right"], 
+      [2, 5, 1, "right"], [5, 6, 2, "right"],
+      [5, 8, 1, "right"], [1, 9, 1, "right"], [2, 10, 1, "right"], [3, 11, 1, "right"], 
+      [5, 12, 2, "right"],
+      [3, 14, 1, "right"], [5, 15, 1, "right"], [1, 16, 2, "right"], [3, 18, 1, "right"], 
+      [5, 19, 1, "right"], [4, 20, 2, "right"],
+      [3, 22, 1, "right"], [2, 23, 1, "right"], [1, 24, 1, "right"], [2, 25, 1, "right"], 
+      [1, 26, 2, "right"],
+      
+      // Main gauche
+      [5, 0, 2, "left"], [3, 2, 2, "left"], [3, 4, 2, "left"], [1, 6, 2, "left"],
+      [1, 8, 2, "left"], [5, 10, 2, "left"], [1, 12, 2, "left"],
+      [5, 14, 2, "left"], [1, 16, 2, "left"], [3, 18, 2, "left"], [2, 20, 2, "left"],
+      [1, 22, 2, "left"], [1, 24, 2, "left"], [5, 26, 2, "left"]
     ]
   },
   
+  // Ah! Les Crocodiles avec main gauche
   "ah_les_crocodiles": {
     displayName: "Ah! Les Crocodiles",
     notes: [
@@ -475,7 +726,13 @@ const songsData = {
       // Traînant ses pieds, ses pieds dans la poussière
       ["C4", 16, 1], ["D4", 17, 1], ["E4", 18, 1], ["F4", 19, 1], ["E4", 20, 1], ["D4", 21, 1], ["C4", 22, 2],
       // Il s'en allait combattre les éléphants
-      ["C4", 24, 1], ["F4", 25, 1], ["E4", 26, 1], ["D4", 27, 1], ["C4", 28, 1], ["G4", 29, 1], ["C4", 30, 2]
+      ["C4", 24, 1], ["F4", 25, 1], ["E4", 26, 1], ["D4", 27, 1], ["C4", 28, 1], ["G4", 29, 1], ["C4", 30, 2],
+      
+      // AJOUT: Partie main gauche
+      ["C3", 0, 1], ["G2", 1, 1], ["C3", 2, 1], ["F3", 3, 1], ["C3", 4, 1], ["G2", 5, 1], ["C3", 6, 2],
+      ["C3", 8, 1], ["F3", 9, 1], ["G3", 10, 1], ["F3", 11, 1], ["G3", 12, 1], ["F3", 13, 1], ["C3", 14, 2],
+      ["C3", 16, 1], ["G2", 17, 1], ["C3", 18, 1], ["F3", 19, 1], ["C3", 20, 1], ["G2", 21, 1], ["C3", 22, 2],
+      ["C3", 24, 1], ["F3", 25, 1], ["C3", 26, 1], ["G2", 27, 1], ["C3", 28, 1], ["G2", 29, 1], ["C3", 30, 2]
     ],
     lyrics: [
       // Un crocodile, s'en allant à la guerre
@@ -486,6 +743,27 @@ const songsData = {
       ["Traî", 16, 1], ["nant", 17, 1], ["ses", 18, 1], ["pieds", 19, 1], ["dans", 20, 1], ["la", 21, 1], ["poussière", 22, 2],
       // Il s'en allait combattre les éléphants
       ["Il", 24, 1], ["s'en", 25, 1], ["al", 26, 1], ["lait", 27, 1], ["com", 28, 1], ["battre", 29, 1], ["les éléphants", 30, 2]
+    ],
+    fingerings: [
+      // Main droite
+      [1, 0, 1, "right"], [2, 1, 1, "right"], [3, 2, 1, "right"], [4, 3, 1, "right"], 
+      [3, 4, 1, "right"], [2, 5, 1, "right"], [1, 6, 2, "right"],
+      [3, 8, 1, "right"], [4, 9, 1, "right"], [5, 10, 1, "right"], [3, 11, 1, "right"], 
+      [5, 12, 1, "right"], [4, 13, 1, "right"], [3, 14, 2, "right"],
+      [1, 16, 1, "right"], [2, 17, 1, "right"], [3, 18, 1, "right"], [4, 19, 1, "right"], 
+      [3, 20, 1, "right"], [2, 21, 1, "right"], [1, 22, 2, "right"],
+      [1, 24, 1, "right"], [4, 25, 1, "right"], [3, 26, 1, "right"], [2, 27, 1, "right"], 
+      [1, 28, 1, "right"], [5, 29, 1, "right"], [1, 30, 2, "right"],
+      
+      // Main gauche
+      [5, 0, 1, "left"], [1, 1, 1, "left"], [5, 2, 1, "left"], [3, 3, 1, "left"], 
+      [5, 4, 1, "left"], [1, 5, 1, "left"], [5, 6, 2, "left"],
+      [5, 8, 1, "left"], [3, 9, 1, "left"], [1, 10, 1, "left"], [3, 11, 1, "left"], 
+      [1, 12, 1, "left"], [3, 13, 1, "left"], [5, 14, 2, "left"],
+      [5, 16, 1, "left"], [1, 17, 1, "left"], [5, 18, 1, "left"], [3, 19, 1, "left"], 
+      [5, 20, 1, "left"], [1, 21, 1, "left"], [5, 22, 2, "left"],
+      [5, 24, 1, "left"], [3, 25, 1, "left"], [5, 26, 1, "left"], [1, 27, 1, "left"], 
+      [5, 28, 1, "left"], [1, 29, 1, "left"], [5, 30, 2, "left"]
     ]
   }
 };
